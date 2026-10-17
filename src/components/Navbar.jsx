@@ -1,13 +1,14 @@
-import "./Navbar.css"
+import "./Navbar.css";
 
 const Navbar = () => {
+
     return (
         <header className="navbar">
             <nav
                 className="contenedor navbar-interior"
                 aria-label="Navegacion Principal"
             >
-                <a href="" className="navbar-marca" hre="#inicio">
+                <a href="#inicio" className="navbar-marca">
                     <span className="navbar-simbolo" aria-hidden="true">
                         R
                     </span>
@@ -15,11 +16,19 @@ const Navbar = () => {
                 </a>
                 <div className="navbar-panel">
                     <ul className="navbar-enlaces">
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#practica">Practica</a></li>
-                        <li><a href="#contacto">Contacto</a></li>
+                        <li>
+                            <a href="#inicio">Inicio</a>
+                        </li>
+                        <li>
+                            <a href="#practica">Práctica</a>
+                        </li>
+                        <li>
+                            <a href="#contacto">Contacto</a>
+                        </li>
                     </ul>
-                    <a href="#practica" className="navbar-accion">Comenzar</a>
+                    <a href="#practica" className="navbar-accion">
+                        Comenzar
+                    </a>
                 </div>
             </nav>
         </header>
