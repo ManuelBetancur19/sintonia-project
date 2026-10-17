@@ -1,9 +1,12 @@
-import React from 'react'
+import "./App.css";
+import Navbar from './components/Navbar';
 
-const App = () => {
+function App() {
   return (
-    <div>App</div>
-  )
+    <div className="sitio">
+      <Navbar />
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -1,0 +1,121 @@
+.navbar {
+    background: var(--color-superficie);
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.navbar-interior {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 var(--espacio-2);
+    min-height: 72px;
+    padding-block: 14px;
+}
+
+.navbar-marca {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espacio-1);
+    color: var(--color-texto);
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.navbar-simbolo {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: var(--color-sobre-primario);
+    background: var(--color-primario);
+    font-size: 1rem;
+}
+
+.navbar-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-2);
+    width: 100%;
+    padding-top: var(--espacio-2);
+}
+
+.navbar-enlaces {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navbar-enlaces a {
+    display: flex;
+    align-items: item;
+    min-height: 44px;
+    padding-inline: var(--espacio-1);
+    color: var(--color-texto-suave);
+    font-size: var(--texto-pequeno);
+    text-decoration: none;
+}
+
+.navbar-enlaces a:hover {
+    color: var(--color-primario-hover);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.navbar-accion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    min-height: 44px;
+    padding: var(--espacio-1) var(--espacio-3);
+    border-radius: 999px;
+    color: var(--color-sobre-primario);
+    background: var(--color-primario);
+    font-size: var(--texto-pequeno);
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.navbar-accion:hover {
+    background: var(--color-primario-hover);
+    color: var(--color-sobre-primario);
+}
+
+@media (min-width: 768px) {
+    .navbar-interior {
+        flex-wrap: nowrap;
+        gap: 40px;
+    }
+
+    .navbar-panel {
+        flex: 1;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--espacio-3);
+        width: auto;
+        padding-top: 0;
+    }
+
+    .navbar-enlaces {
+        flex-direction: row;
+        gap: var(--espacio-3);
+    }
+
+    .navbar-enlaces a {
+        padding-inline: 0;
+    }
+
+    .navbar-accion {
+        align-self: auto;
+    }
+}
