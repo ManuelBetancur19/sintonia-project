@@ -1,124 +1,237 @@
+/* Navbar de Sintonía. Solo usa tokens de tokens.css. */
+
 .navbar {
-    background: var(--fondo-superficie);
-    border-bottom: 1px solid var(--borde-sutil);
+  background: var(--fondo-base);
+  border-bottom: 1px solid var(--borde-sutil);
 }
 
 .navbar-interior {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0 var(--espacio-2);
-    min-height: 72px;
-    padding-block: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--espacio-8);
+  min-height: 72px;
+  padding-block: var(--espacio-3);
 }
 
+/* Logo */
 .navbar-marca {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--espacio-1);
-    color: var(--texto-principal);
-    font-size: 1.125rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  color: var(--texto-principal);
+  font-family: var(--fuente-syne);
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.navbar-marca:hover {
+  text-decoration: none;
+}
+
+.navbar-logo {
+  display: block;
+  height: 40px;
+  width: auto;
 }
 
 .navbar-simbolo {
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    color: var(--texto-sobre-marca);
-    background: var(--marca-primario);
-    font-size: 1rem;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radio-completo);
+  color: var(--texto-sobre-marca);
+  background: var(--marca-primario);
 }
 
+/* Panel con enlaces y utilidades */
 .navbar-panel {
-    display: flex;
-    flex-direction: column;
-    gap: var(--espacio-2);
-    width: 100%;
-    padding-top: var(--espacio-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  width: 100%;
+  padding-top: var(--espacio-4);
 }
 
 .navbar-enlaces {
-    display: flex;
-    flex-direction: column;
-    gap: var(--espacio-1);
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .navbar-enlaces a {
-    display: flex;
-    align-items: center;
-    min-height: 44px;
-    padding-inline: var(--espacio-1);
-    color: var(--texto-secundario);
-    /* font-size: var(--texto-pequeno); */
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--texto-secundario);
+  font-family: var(--fuente-inter);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
 }
 
-.navbar-enlaces a:hover {
-    color: var(--marca-primario-hover);
-    text-decoration: underline;
-    text-underline-offset: 2px;
+.navbar-enlaces a:hover,
+.navbar-enlaces a[aria-current="page"] {
+  color: var(--texto-principal);
+}
+
+/* Utilidades: idioma, accesibilidad, ingresar y crear cuenta */
+.navbar-utilidades {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.navbar-idioma,
+.navbar-accesibilidad {
+  height: 40px;
+  border: 1px solid var(--borde-fuerte);
+  border-radius: var(--radio-completo);
+  color: var(--texto-principal);
+  background: transparent;
+}
+
+.navbar-idioma {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding-left: var(--espacio-4);
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+/* Flecha del selector, hecha con CSS para que siga el color del tema */
+.navbar-idioma::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin-top: -6px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.navbar-idioma select {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font-family: var(--fuente-inter);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.navbar-idioma select option {
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+}
+
+.navbar-idioma:focus-within {
+  outline: 2px solid var(--texto-marca);
+  outline-offset: 2px;
+}
+
+.navbar-idioma select:focus-visible {
+  outline: none;
+}
+
+.navbar-icono {
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.navbar-accesibilidad {
+  width: 40px;
+}
+
+.navbar-accesibilidad:hover,
+.navbar-idioma:hover {
+  border-color: var(--texto-secundario);
+}
+
+.navbar-accesibilidad[aria-pressed="true"] {
+  border-color: var(--marca-primario);
+  background: var(--marca-suave);
+}
+
+.navbar-idioma svg,
+.navbar-accesibilidad svg {
+  width: 20px;
+  height: 20px;
+}
+
+.navbar-ingresar {
+  padding-inline: var(--espacio-4);
+  color: var(--texto-principal);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.navbar-ingresar:hover {
+  color: var(--texto-marca);
 }
 
 .navbar-accion {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    align-self: flex-start;
-    min-height: 44px;
-    padding: var(--espacio-1) var(--espacio-3);
-    border-radius: 999px;
-    color: var(--texto-sobre-marca);
-    background: var(--marca-primario);
-    /* font-size: var(--texto-pequeno); */
-    font-size: 14px;
-    font-weight: 700;
-    text-decoration: none;
-    white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--espacio-3) var(--espacio-6);
+  border-radius: var(--radio-completo);
+  color: var(--texto-sobre-marca);
+  background: var(--marca-primario);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .navbar-accion:hover {
-    background: var(--marca-primario-hover);
-    color: var(--texto-sobre-marca);
+  color: var(--texto-sobre-marca);
+  background: var(--marca-primario-hover);
+  text-decoration: none;
 }
 
-@media (min-width: 768px) {
-    .navbar-interior {
-        flex-wrap: nowrap;
-        gap: 40px;
-    }
+.navbar-accion:active {
+  background: var(--marca-primario-presionado);
+}
 
-    .navbar-panel {
-        flex: 1;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--espacio-3);
-        width: auto;
-        padding-top: 0;
-    }
+/* Escritorio */
+@media (min-width: 900px) {
+  .navbar-interior {
+    flex-wrap: nowrap;
+  }
 
-    .navbar-enlaces {
-        flex-direction: row;
-        gap: var(--espacio-3);
-    }
+  .navbar-panel {
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espacio-6);
+    width: auto;
+    padding-top: 0;
+  }
 
-    .navbar-enlaces a {
-        padding-inline: 0;
-    }
-
-    .navbar-accion {
-        align-self: auto;
-    }
+  .navbar-enlaces {
+    flex-direction: row;
+    gap: var(--espacio-8);
+  }
 }
