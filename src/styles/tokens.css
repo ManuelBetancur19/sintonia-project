@@ -1,6 +1,9 @@
 /* Tokens de diseño de Sintonía, exportados del archivo de Figma. */
 /* Nombres iguales a las variables de Figma: "fondo/pagina" se usa como var(--fondo-pagina). */
 
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Syne:wght@700;800&display=swap");
+
 :root {
   /* Color (modo Oscuro) */
   --fondo-base: #0c0b10;
@@ -87,18 +90,115 @@
 }
 
 /* Estilos de texto de Figma como clases. */
-.titular-gigante { font-family: var(--fuente-syne); font-weight: 800; font-size: 120px; line-height: 108px; letter-spacing: -0.030em; }
-.titular-display { font-family: var(--fuente-syne); font-weight: 800; font-size: 64px; line-height: 68px; letter-spacing: -0.020em; }
-.titular-h1 { font-family: var(--fuente-syne); font-weight: 700; font-size: 40px; line-height: 46px; letter-spacing: -0.015em; }
-.titular-h2 { font-family: var(--fuente-syne); font-weight: 700; font-size: 28px; line-height: 34px; letter-spacing: -0.010em; }
-.titular-h3 { font-family: var(--fuente-syne); font-weight: 700; font-size: 20px; line-height: 26px; letter-spacing: -0.005em; }
-.titular-h4 { font-family: var(--fuente-syne); font-weight: 700; font-size: 16px; line-height: 22px; }
-.cuerpo-g { font-family: var(--fuente-inter); font-weight: 400; font-size: 18px; line-height: 28px; }
-.cuerpo-m { font-family: var(--fuente-inter); font-weight: 400; font-size: 16px; line-height: 24px; }
-.cuerpo-m-fuerte { font-family: var(--fuente-inter); font-weight: 600; font-size: 16px; line-height: 24px; }
-.cuerpo-p { font-family: var(--fuente-inter); font-weight: 400; font-size: 14px; line-height: 20px; }
-.cuerpo-p-fuerte { font-family: var(--fuente-inter); font-weight: 600; font-size: 14px; line-height: 20px; }
-.detalle-nota { font-family: var(--fuente-inter); font-weight: 400; font-size: 12px; line-height: 16px; }
-.detalle-nota-fuerte { font-family: var(--fuente-inter); font-weight: 600; font-size: 12px; line-height: 16px; }
-.detalle-etiqueta { font-family: var(--fuente-inter); font-weight: 600; font-size: 11px; line-height: 16px; letter-spacing: 0.080em; text-transform: uppercase; }
-.dato-cifra { font-family: var(--fuente-syne); font-weight: 700; font-size: 32px; line-height: 36px; letter-spacing: -0.010em; }
+.titular-gigante {
+  font-family: var(--fuente-syne);
+  font-weight: 800;
+  font-size: 120px;
+  line-height: 108px;
+  letter-spacing: -0.030em;
+}
+
+.titular-display {
+  font-family: var(--fuente-syne);
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 68px;
+  letter-spacing: -0.020em;
+}
+
+.titular-h1 {
+  font-family: var(--fuente-syne);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  letter-spacing: -0.015em;
+}
+
+.titular-h2 {
+  font-family: var(--fuente-syne);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: -0.010em;
+}
+
+.titular-h3 {
+  font-family: var(--fuente-syne);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: -0.005em;
+}
+
+.titular-h4 {
+  font-family: var(--fuente-syne);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.cuerpo-g {
+  font-family: var(--fuente-inter);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.cuerpo-m {
+  font-family: var(--fuente-inter);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.cuerpo-m-fuerte {
+  font-family: var(--fuente-inter);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.cuerpo-p {
+  font-family: var(--fuente-inter);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.cuerpo-p-fuerte {
+  font-family: var(--fuente-inter);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.detalle-nota {
+  font-family: var(--fuente-inter);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.detalle-nota-fuerte {
+  font-family: var(--fuente-inter);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.detalle-etiqueta {
+  font-family: var(--fuente-inter);
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.080em;
+  text-transform: uppercase;
+}
+
+.dato-cifra {
+  font-family: var(--fuente-syne);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -0.010em;
+}
