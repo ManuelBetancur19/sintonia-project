@@ -1,237 +1,441 @@
-/* Navbar de Sintonía. Solo usa tokens de tokens.css. */
+/* Estilos de la barra de navegación: contenedor, logo, enlaces, buscador,
+   selector de idioma y botones. */
+/* ============================================================ */
 
+
+/* ------------------------------------------------------------
+   CONTENEDOR
+   ------------------------------------------------------------ */
+
+/* Barra fija arriba que se queda visible al hacer scroll */
 .navbar {
-  background: var(--fondo-base);
-  border-bottom: 1px solid var(--borde-sutil);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    color: var(--texto-principal);
+    background: var(--fondo-base);
+    border-bottom: 1px solid var(--borde-sutil);
+    font-family: var(--fuente-inter);
 }
 
+/* Contenido centrado con márgenes laterales y ancho máximo de 80rem */
 .navbar-interior {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0 var(--espacio-8);
-  min-height: 72px;
-  padding-block: var(--espacio-3);
+    width: min(100% - 2rem, 80rem);
+    min-height: 64px;
+    margin-inline: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 12px;
 }
 
-/* Logo */
+
+/* ------------------------------------------------------------
+   ESTILOS BASE
+   ------------------------------------------------------------ */
+
+/* Enlaces sin subrayado por defecto */
+.navbar a {
+    text-decoration: none;
+}
+
+/* Los botones heredan la tipografía de la barra */
+.navbar button {
+    font: inherit;
+    cursor: pointer;
+}
+
+/* Contorno visible al navegar con teclado */
+.navbar :focus-visible {
+    outline: 3px solid var(--marca-primario);
+    outline-offset: 3px;
+}
+
+
+/* ------------------------------------------------------------
+   LOGO
+   ------------------------------------------------------------ */
+
+/* Enlace del logo: contiene solo la imagen SVG */
 .navbar-marca {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--espacio-2);
-  color: var(--texto-principal);
-  font-family: var(--fuente-syne);
-  font-size: 20px;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
 }
 
-.navbar-marca:hover {
-  text-decoration: none;
-}
-
+/* El ancho se ajusta solo a partir de la altura */
 .navbar-logo {
-  display: block;
-  height: 40px;
-  width: auto;
+    display: block;
+    height: 40px;
+    width: auto;
 }
 
-.navbar-simbolo {
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radio-completo);
-  color: var(--texto-sobre-marca);
-  background: var(--marca-primario);
+
+/* ------------------------------------------------------------
+   ACCIONES Y BOTONES DE ICONO
+   ------------------------------------------------------------ */
+
+/* Grupo a la derecha: Ingresar y hamburguesa */
+.navbar-acciones {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
 }
 
-/* Panel con enlaces y utilidades */
+/* Botón circular de 44px (tamaño mínimo recomendado para tocar) */
+.navbar-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--radio-completo);
+    color: var(--texto-principal);
+    background: transparent;
+}
+
+/* Hover; también aplica cuando el botón está activado (aria-pressed).
+   El aria-pressed solo se usará con el botón de accesibilidad (pendiente) */
+.navbar-icono:hover,
+.navbar-icono[aria-pressed="true"] {
+    background: var(--fondo-superficie);
+}
+
+/* Deshabilitado mientras cargan los textos */
+.navbar-icono:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+
+/* ------------------------------------------------------------
+   PANEL (menú desplegable en móvil)
+   ------------------------------------------------------------ */
+
+/* Cerrado por defecto: en móvil solo se ve al abrir la hamburguesa */
 .navbar-panel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--espacio-4);
-  width: 100%;
-  padding-top: var(--espacio-4);
+    display: none;
+    flex-direction: column;
+    gap: var(--espacio-4);
+    width: 100%;
+    padding-block: var(--espacio-4);
 }
 
+/* Estado abierto del menú */
+.navbar-panel.is-abierto {
+    display: flex;
+}
+
+/* Marcador de carga (sin texto): una barra que ocupa el lugar del menú */
+.navbar-esqueleto {
+    display: block;
+    width: 100%;
+    height: var(--espacio-6);
+    border-radius: var(--radio-md);
+    background: var(--fondo-sutil);
+}
+
+/* Estado de error con botón de reintentar */
+.navbar-estado {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-3);
+    color: var(--estado-error);
+}
+
+.navbar-estado button {
+    padding: var(--espacio-2) var(--espacio-4);
+    border: 1px solid var(--borde-fuerte);
+    border-radius: var(--radio-completo);
+    color: var(--texto-principal);
+    background: transparent;
+}
+
+
+/* ------------------------------------------------------------
+   ENLACES DE NAVEGACIÓN
+   ------------------------------------------------------------ */
+
+/* Lista sin viñetas, en columna */
 .navbar-enlaces {
-  display: flex;
-  flex-direction: column;
-  gap: var(--espacio-2);
-  margin: 0;
-  padding: 0;
-  list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .navbar-enlaces a {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  color: var(--texto-secundario);
-  font-family: var(--fuente-inter);
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.navbar-enlaces a:hover,
-.navbar-enlaces a[aria-current="page"] {
-  color: var(--texto-principal);
-}
-
-/* Utilidades: idioma, accesibilidad, ingresar y crear cuenta */
-.navbar-utilidades {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--espacio-3);
-}
-
-.navbar-idioma,
-.navbar-accesibilidad {
-  height: 40px;
-  border: 1px solid var(--borde-fuerte);
-  border-radius: var(--radio-completo);
-  color: var(--texto-principal);
-  background: transparent;
-}
-
-.navbar-idioma {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--espacio-2);
-  padding-left: var(--espacio-4);
-  padding-right: 36px;
-  cursor: pointer;
-}
-
-/* Flecha del selector, hecha con CSS para que siga el color del tema */
-.navbar-idioma::after {
-  content: "";
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  width: 7px;
-  height: 7px;
-  margin-top: -6px;
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: rotate(45deg);
-  pointer-events: none;
-}
-
-.navbar-idioma select {
-  appearance: none;
-  padding: 0;
-  border: 0;
-  color: inherit;
-  background: transparent;
-  font-family: var(--fuente-inter);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.navbar-idioma select option {
-  color: var(--texto-principal);
-  background: var(--fondo-superficie);
-}
-
-.navbar-idioma:focus-within {
-  outline: 2px solid var(--texto-marca);
-  outline-offset: 2px;
-}
-
-.navbar-idioma select:focus-visible {
-  outline: none;
-}
-
-.navbar-icono {
-  display: inline-grid;
-  place-items: center;
-  padding: 0;
-  cursor: pointer;
-}
-
-.navbar-accesibilidad {
-  width: 40px;
-}
-
-.navbar-accesibilidad:hover,
-.navbar-idioma:hover {
-  border-color: var(--texto-secundario);
-}
-
-.navbar-accesibilidad[aria-pressed="true"] {
-  border-color: var(--marca-primario);
-  background: var(--marca-suave);
-}
-
-.navbar-idioma svg,
-.navbar-accesibilidad svg {
-  width: 20px;
-  height: 20px;
-}
-
-.navbar-ingresar {
-  padding-inline: var(--espacio-4);
-  color: var(--texto-principal);
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.navbar-ingresar:hover {
-  color: var(--texto-marca);
-}
-
-.navbar-accion {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: var(--espacio-3) var(--espacio-6);
-  border-radius: var(--radio-completo);
-  color: var(--texto-sobre-marca);
-  background: var(--marca-primario);
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.navbar-accion:hover {
-  color: var(--texto-sobre-marca);
-  background: var(--marca-primario-hover);
-  text-decoration: none;
-}
-
-.navbar-accion:active {
-  background: var(--marca-primario-presionado);
-}
-
-/* Escritorio */
-@media (min-width: 900px) {
-  .navbar-interior {
-    flex-wrap: nowrap;
-  }
-
-  .navbar-panel {
-    flex: 1;
-    flex-direction: row;
+    display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--espacio-6);
-    width: auto;
-    padding-top: 0;
-  }
+    min-height: 44px;
+    color: var(--texto-secundario);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+}
 
-  .navbar-enlaces {
-    flex-direction: row;
-    gap: var(--espacio-8);
-  }
+/* Hover: solo cambia el color */
+.navbar-enlaces a:hover {
+    color: var(--texto-principal);
+}
+
+/* ------------------------------------------------------------
+   SELECTOR DE IDIOMA (ES | EN)
+   ------------------------------------------------------------ */
+
+/* Contenedor: título (solo móvil) + cápsula */
+.navbar-idioma {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-2);
+}
+
+/* Título "Idioma": visible solo en el menú móvil */
+.navbar-idioma-titulo {
+    color: var(--texto-terciario);
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Cápsula con los dos botones */
+.navbar-idioma-opciones {
+    display: inline-flex;
+    align-self: flex-start;
+    padding: var(--espacio-1);
+    border: 1px solid var(--borde-sutil);
+    border-radius: var(--radio-completo);
+    background: var(--fondo-superficie);
+}
+
+/* Botones ES y EN: mismo tamaño */
+.navbar-idioma-opciones button {
+    min-width: 44px;
+    min-height: 36px;
+    padding: 0 var(--espacio-3);
+    border: 0;
+    border-radius: var(--radio-completo);
+    color: var(--texto-secundario);
+    background: transparent;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+}
+
+.navbar-idioma-opciones button:hover {
+    color: var(--texto-principal);
+}
+
+/* Idioma activo en verde lima */
+.navbar-idioma-opciones button.is-activo {
+    color: var(--texto-sobre-marca);
+    background: var(--marca-primario);
+}
+
+/* Boton de accesibilidad */
+.navbar-accesibilidad {
+    width: 40px;
+}
+
+.navbar-accesibilidad:hover {
+    border-color: var(--marca-primario-presionado);
+}
+
+.navbar-accesibilidad svg {
+    width: 20px;
+}
+
+/* ------------------------------------------------------------
+   ACCIONES Y BOTONES DE ICONO
+   ------------------------------------------------------------ */
+
+.navbar-acciones {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
+}
+
+/* Botón circular de 44px (hamburguesa) */
+.navbar-icono-hamburguesa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--radio-completo);
+    color: var(--texto-principal);
+    background: transparent;
+}
+
+.navbar-icono-hamburguesa:hover {
+    background: var(--fondo-superficie);
+}
+
+.navbar-icono-hamburguesa:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+
+/* Accesibilidad */
+/* .navbar-icono-accesibilidad {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--radio-completo);
+    color: var(--texto-principal);
+    background: transparent;
+}
+
+.navbar-icono-accesibilidad:hover,
+.navbar-icono-accesibilidad[aria-pressed="true"] {
+    background: var(--fondo-superficie);
+    border-color: var(--marca-primario-presionado);
+} */
+
+/* ------------------------------------------------------------
+   BOTONES DE ACCIÓN
+   ------------------------------------------------------------ */
+
+/* Ingresar (escritorio y móvil comparten estilo) */
+.navbar-ingresar-escritorio,
+.navbar-ingresar-movil {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: var(--espacio-4);
+    color: var(--texto-principal);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+}
+
+.navbar-ingresar-escritorio:hover,
+.navbar-ingresar-movil:hover {
+    color: var(--texto-marca);
+}
+
+/* Crear cuenta (escritorio y móvil comparten estilo) */
+.boton-primario-crear-cuenta-escritorio,
+.boton-primario-crear-cuenta-movil {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: var(--espacio-3) var(--espacio-6);
+    border-radius: var(--radio-completo);
+    color: var(--texto-sobre-marca);
+    background: var(--marca-primario);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.boton-primario-crear-cuenta-escritorio:hover,
+.boton-primario-crear-cuenta-movil:hover {
+    background: var(--marca-primario-hover);
+}
+
+.boton-primario-crear-cuenta-escritorio:active,
+.boton-primario-crear-cuenta-movil:active {
+    background: var(--marca-primario-presionado);
+}
+
+/* Crear cuenta en el menú móvil: ancho completo */
+.boton-primario-crear-cuenta-movil {
+    width: 100%;
+}
+
+/* ------------------------------------------------------------
+   VERSIÓN ESCRITORIO / VERSIÓN MÓVIL
+   ------------------------------------------------------------ */
+
+/* Móvil primero: se oculta lo que es solo de escritorio */
+.navbar-ingresar-escritorio,
+.boton-primario-crear-cuenta-escritorio {
+    display: none;
+}
+
+
+/* ------------------------------------------------------------
+   ESCRITORIO (≥ 900px)
+   ------------------------------------------------------------ */
+
+@media (min-width: 900px) {
+
+    /* Barra más alta y en una sola fila */
+    .navbar-interior {
+        min-height: 72px;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: var(--espacio-6);
+    }
+
+    /* El panel desaparece como caja: sus hijos quedan en la fila
+       principal y se ordenan con `order` */
+    .navbar-panel,
+    .navbar-panel.is-abierto {
+        display: contents;
+    }
+
+    /* Orden visual: logo, enlaces ... idioma, Ingresar, Crear cuenta */
+    .navbar-marca {
+        order: 1;
+    }
+
+    .navbar-enlaces {
+        order: 2;
+        flex-direction: row;
+        gap: var(--espacio-4);
+        margin-right: auto;
+    }
+
+    .navbar-idioma {
+        order: 3;
+    }
+
+    /* .navbar-icono-accesibilidad {
+        order: 3;
+    } */
+
+    .navbar-acciones {
+        order: 4;
+    }
+
+    .boton-primario-crear-cuenta-escritorio {
+        order: 5;
+    }
+
+    /* Enlaces en una sola línea */
+    .navbar-enlaces a {
+        white-space: nowrap;
+    }
+
+    /* Se muestra lo de escritorio y se oculta lo de móvil */
+    .navbar-ingresar-escritorio,
+    .boton-primario-crear-cuenta-escritorio {
+        display: inline-flex;
+    }
+
+    .navbar-ingresar-movil,
+    .boton-primario-crear-cuenta-movil,
+    .navbar-icono-hamburguesa,
+    .navbar-idioma-titulo {
+        display: none;
+    }
 }
