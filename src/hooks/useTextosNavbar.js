@@ -1,5 +1,5 @@
-// Hook que carga desde la API los textos del navbar según el
-// idioma, validando la respuesta y manejando carga, error y reintento.
+// Hook que carga desde la API los textos del navbar según el idioma,
+// validando la respuesta y manejando carga, error y reintento.
 // ============================================================
 
 import { useEffect, useState } from "react";

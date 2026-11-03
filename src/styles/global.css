@@ -59,7 +59,7 @@ a:hover { color: var(--marca-primario-hover); }
 /* Centra el contenido con ancho máximo de 1200px y 1rem de margen
    a cada lado en pantallas pequeñas */
 .contenedor {
-  max-width: 1200px;
+  max-width: var(--ancho-contenido);
   margin-inline: auto;
   width: calc(100% - 2rem);
 }

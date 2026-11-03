@@ -1,11 +1,23 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar.jsx";
-import { useTextosNavbar } from "./hooks/useTextosNavbar.js";
+import Hero from "./components/Hero/Hero.jsx";
+import Destacados from "./components/destacados/Destacados.jsx";
+import { useHero } from "./hooks/useHero.js";
+import { useDestacados } from "./hooks/useDestacados.js";
 
 function App() {
   const [idioma, setIdioma] = useState("es");
-  const { textos, cargando, error, recargar } = useTextosNavbar(idioma);
+  const {
+    textosNavbar,
+    textosHero,
+    textosCompletos,
+    textoTarjeta,
+    cargando,
+    error,
+    recargar,
+  } = useHero(idioma);
+  const destacados = useDestacados({ textos: textosCompletos });
 
   useEffect(() => {
     document.documentElement.lang = idioma;
@@ -14,7 +26,7 @@ function App() {
   return (
     <div className="sitio">
       <Navbar
-        textos={textos}
+        textos={textosNavbar}
         cargando={cargando}
         error={error}
         recargar={recargar}
@@ -22,7 +34,14 @@ function App() {
         cambiarIdioma={setIdioma}
         activo="inicio"
       />
-      <main className="contenedor">{/* vistas */}</main>
+      <main id="contenido" className="contenedor">
+        <Hero
+          textos={textosHero}
+          textoTarjeta={textoTarjeta}
+          totalGeneros={destacados.totalGeneros}
+        />
+        <Destacados {...destacados} />
+      </main>
     </div>
   );
 }

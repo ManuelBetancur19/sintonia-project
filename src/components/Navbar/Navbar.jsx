@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import Icono from "../Icono/Icono.jsx";
-import logo from "../../assets/logo.svg";
+import logo from "../../assets/logo/logo.svg";
 import "./Navbar.css";
 
 const RUTAS = {
@@ -26,7 +26,6 @@ export default function Navbar({
   const nav = textos?.navbar;
   const menu = textos?.menuMovil;
   const codigos = textos?.idioma?.codigos;
-
   const enlaces = nav
     ? [
         { clave: "inicio", texto: nav.enlaces?.inicio },
@@ -49,14 +48,21 @@ export default function Navbar({
       }
     }
 
+    const overflowAnterior = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     document.addEventListener("keydown", cerrarConEscape);
-    return () => document.removeEventListener("keydown", cerrarConEscape);
+    return () => {
+      document.removeEventListener("keydown", cerrarConEscape);
+      document.body.style.overflow = overflowAnterior;
+    };
   }, [abierto]);
 
   const cerrarMenu = () => setAbierto(false);
 
   return (
-    <header className="navbar">
+    <header
+      className={`navbar${abierto ? " menu-abierto" : ""}`}
+    >
       <nav className="navbar-interior" aria-label={nav?.aria?.navegacion}>
         <a
           className="navbar-marca"
@@ -134,6 +140,15 @@ export default function Navbar({
                 </div>
 
                 <a
+                  className="navbar-crear-cuenta"
+                  href={RUTAS.crearCuenta}
+                  onClick={cerrarMenu}
+                >
+                  {menu?.botones?.invitado?.crearCuenta ??
+                    nav.botones?.invitado?.crearCuenta}
+                </a>
+
+                <a
                   className="navbar-ingresar-menu"
                   href={RUTAS.ingresar}
                   onClick={cerrarMenu}
@@ -146,13 +161,6 @@ export default function Navbar({
                   onClick={cerrarMenu}
                 >
                   {nav.botones?.invitado?.ingresar}
-                </a>
-                <a
-                  className="navbar-crear-cuenta"
-                  href={RUTAS.crearCuenta}
-                  onClick={cerrarMenu}
-                >
-                  {nav.botones?.invitado?.crearCuenta}
                 </a>
               </div>
             </>
