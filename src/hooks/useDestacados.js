@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { API_URL } from "../config.js";
+import { obtenerGeneros } from "../services/generos.js";
 
 function textosValidos(textos) {
   const destacados = textos?.paginas?.inicioPublico?.destacados;
@@ -43,11 +44,7 @@ export function useDestacados({ textos }) {
 
     async function cargarAlbumes() {
       try {
-        const respuesta = await fetch(`${API_URL}/generos`, {
-          signal: controlador.signal,
-        });
-        if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
-        const { datos: generos = [] } = await respuesta.json();
+        const { datos: generos = [] } = await obtenerGeneros();
         if (vigente) setTotalGeneros(generos.length);
 
         const primerosGeneros = generos.slice(0, 6);
