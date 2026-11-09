@@ -18,7 +18,7 @@
   margin: 0;
   color: inherit;
   font-family: var(--fuente-syne);
-  font-size: clamp(24px, 2.2vw, 28px);
+  font-size: clamp(1.5rem, 2.2vw, 1.75rem);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -28,8 +28,8 @@
   margin: var(--espacio-3) 0 0;
   color: inherit;
   font-family: var(--fuente-inter);
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .inicio-cta-enlace {
@@ -44,9 +44,9 @@
   color: var(--texto-principal);
   background: var(--fondo-base);
   font-family: var(--fuente-inter);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
-  line-height: 24px;
+  line-height: 1.5rem;
   text-align: center;
   text-decoration: none;
   transition: background-color 160ms ease;
@@ -78,7 +78,7 @@
   }
 
   .inicio-cta h2 {
-    font-size: clamp(24px, 6vw, 28px);
+    font-size: clamp(1.5rem, 6vw, 1.75rem);
   }
 }
 

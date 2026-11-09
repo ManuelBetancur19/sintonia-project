@@ -14,9 +14,9 @@
   margin: 0;
   color: var(--texto-principal);
   font-family: var(--fuente-syne);
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 700;
-  line-height: 26px;
+  line-height: 1.625rem;
 }
 
 .explora-generos-catalogo {
@@ -25,9 +25,9 @@
   gap: var(--espacio-2);
   color: var(--texto-marca);
   font-family: var(--fuente-inter);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
-  line-height: 16px;
+  line-height: 1rem;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -95,8 +95,8 @@
   color: var(--texto-secundario);
   background: var(--fondo-superficie);
   font-family: var(--fuente-inter);
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .explora-generos-error {
@@ -111,8 +111,8 @@
 .explora-generos-estado h3 {
   color: var(--texto-principal);
   font-family: var(--fuente-syne);
-  font-size: 16px;
-  line-height: 22px;
+  font-size: 1rem;
+  line-height: 1.375rem;
 }
 
 .explora-generos-estado button {
@@ -160,8 +160,8 @@
   }
 
   .explora-generos-cabecera h2 {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
   }
 }
 

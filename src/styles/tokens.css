@@ -94,104 +94,104 @@
 .titular-gigante {
   font-family: var(--fuente-syne);
   font-weight: 800;
-  font-size: 120px;
-  line-height: 108px;
+  font-size: 7.5rem;
+  line-height: 6.75rem;
   letter-spacing: -0.030em;
 }
 
 .titular-display {
   font-family: var(--fuente-syne);
   font-weight: 800;
-  font-size: 64px;
-  line-height: 68px;
+  font-size: 4rem;
+  line-height: 4.25rem;
   letter-spacing: -0.020em;
 }
 
 .titular-h1 {
   font-family: var(--fuente-syne);
   font-weight: 700;
-  font-size: 40px;
-  line-height: 46px;
+  font-size: 2.5rem;
+  line-height: 2.875rem;
   letter-spacing: -0.015em;
 }
 
 .titular-h2 {
   font-family: var(--fuente-syne);
   font-weight: 700;
-  font-size: 28px;
-  line-height: 34px;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
   letter-spacing: -0.010em;
 }
 
 .titular-h3 {
   font-family: var(--fuente-syne);
   font-weight: 700;
-  font-size: 20px;
-  line-height: 26px;
+  font-size: 1.25rem;
+  line-height: 1.625rem;
   letter-spacing: -0.005em;
 }
 
 .titular-h4 {
   font-family: var(--fuente-syne);
   font-weight: 700;
-  font-size: 16px;
-  line-height: 22px;
+  font-size: 1rem;
+  line-height: 1.375rem;
 }
 
 .cuerpo-g {
   font-family: var(--fuente-inter);
   font-weight: 400;
-  font-size: 18px;
-  line-height: 28px;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .cuerpo-m {
   font-family: var(--fuente-inter);
   font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .cuerpo-m-fuerte {
   font-family: var(--fuente-inter);
   font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .cuerpo-p {
   font-family: var(--fuente-inter);
   font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .cuerpo-p-fuerte {
   font-family: var(--fuente-inter);
   font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .detalle-nota {
   font-family: var(--fuente-inter);
   font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .detalle-nota-fuerte {
   font-family: var(--fuente-inter);
   font-weight: 600;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .detalle-etiqueta {
   font-family: var(--fuente-inter);
   font-weight: 600;
-  font-size: 11px;
-  line-height: 16px;
+  font-size: 0.6875rem;
+  line-height: 1rem;
   letter-spacing: 0.080em;
   text-transform: uppercase;
 }
@@ -199,7 +199,7 @@
 .dato-cifra {
   font-family: var(--fuente-syne);
   font-weight: 700;
-  font-size: 32px;
-  line-height: 36px;
+  font-size: 2rem;
+  line-height: 2.25rem;
   letter-spacing: -0.010em;
 }
