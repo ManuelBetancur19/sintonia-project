@@ -16,6 +16,8 @@ function validarTextos(datos) {
   const cifras = pagina?.cifras;
   const accesibilidad = textos?.accesibilidad;
   const avisoCookies = textos?.cookies?.banner;
+  const catalogo = textos?.paginas?.catalogo;
+  const estados = textos?.estados;
 
   const textosObligatorios = [
     hero?.etiquetas?.temporada,
@@ -49,6 +51,32 @@ function validarTextos(datos) {
     avisoCookies?.texto,
     avisoCookies?.botones?.rechazar,
     avisoCookies?.botones?.aceptar,
+    catalogo?.seo?.titulo,
+    catalogo?.seo?.descripcion,
+    catalogo?.encabezado?.titulo,
+    catalogo?.encabezado?.subtitulo,
+    catalogo?.generos?.titulo,
+    catalogo?.generos?.aria?.seleccionado,
+    catalogo?.destacados?.titulo,
+    catalogo?.destacados?.enlaces?.descubrirMas,
+    catalogo?.genero?.artistas?.titulo,
+    catalogo?.genero?.artistas?.etiqueta,
+    catalogo?.genero?.albumes?.titulo,
+    catalogo?.genero?.canciones?.titulo,
+    catalogo?.vacio?.titulo,
+    catalogo?.vacio?.texto,
+    estados?.cargando?.titulo,
+    estados?.cargando?.aria,
+    estados?.error?.titulo,
+    estados?.error?.descripcion,
+    estados?.error?.botones?.reintentar,
+    estados?.vacio?.generico,
+    estados?.sinConexion?.titulo,
+    estados?.sinConexion?.descripcion,
+    estados?.sinConexion?.botones?.reintentar,
+    estados?.noEncontrado?.titulo,
+    estados?.noEncontrado?.descripcion,
+    estados?.noEncontrado?.botones?.irAlInicio,
   ];
 
   if (

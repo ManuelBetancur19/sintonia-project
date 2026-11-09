@@ -1,0 +1,48 @@
+.genero-tarjeta {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radio-lg);
+  text-decoration: none;
+  transition: transform 160ms ease;
+}
+
+.genero-tarjeta:hover {
+  transform: translateY(-2px);
+}
+
+.genero-tarjeta:focus-visible {
+  outline: 3px solid var(--marca-primario);
+  outline-offset: 3px;
+}
+
+.genero-tarjeta.is-seleccionado {
+  outline: 2px solid var(--marca-primario);
+  outline-offset: 2px;
+}
+
+.genero-tarjeta-imagen {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 263 / 132;
+  border-radius: inherit;
+}
+
+.genero-tarjeta-solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .genero-tarjeta {
+    transition: none;
+  }
+}

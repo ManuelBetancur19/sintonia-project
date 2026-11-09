@@ -1,6 +1,8 @@
+import { Link } from "react-router";
 import ilustracionTurquesa from "../../assets/ilustraciones/Hero (2).svg";
 import ilustracionRosa from "../../assets/ilustraciones/Hero (3).svg";
 import ilustracionNaranja from "../../assets/ilustraciones/Hero.svg";
+import { RUTAS } from "../../rutas.js";
 import "./Hero.css";
 
 export default function Hero({ textos, totalGeneros, textoTarjeta }) {
@@ -17,12 +19,12 @@ export default function Hero({ textos, totalGeneros, textoTarjeta }) {
         <p className="hero-subtitulo">{hero.subtitulo}</p>
 
         <div className="hero-acciones">
-          <a className="hero-boton hero-boton-primario" href="/crear-cuenta">
+          <Link className="hero-boton hero-boton-primario" to={RUTAS.crearCuenta}>
             {hero.botones.crearCuentaGratis}
-          </a>
-          <a className="hero-boton hero-boton-secundario" href="/catalogo">
+          </Link>
+          <Link className="hero-boton hero-boton-secundario" to={RUTAS.catalogo}>
             {hero.botones.explorarCatalogo}
-          </a>
+          </Link>
         </div>
 
         <dl className="hero-cifras">

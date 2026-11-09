@@ -88,6 +88,10 @@
   color: var(--texto-principal);
 }
 
+.navbar-enlaces a[aria-current="page"] {
+  color: var(--texto-marca);
+}
+
 .navbar-acciones {
   display: flex;
   align-items: center;

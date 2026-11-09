@@ -1,0 +1,330 @@
+.catalogo {
+  padding-block: var(--espacio-8) var(--espacio-12);
+}
+
+.catalogo-panel {
+  padding: var(--espacio-8);
+  border-radius: var(--radio-xl);
+  background: var(--fondo-superficie);
+}
+
+.catalogo-encabezado {
+  max-width: 52rem;
+  margin-bottom: var(--espacio-8);
+}
+
+.catalogo-encabezado h1,
+.catalogo-encabezado p,
+.catalogo-seccion > h2,
+.catalogo-vacio h3,
+.catalogo-vacio p,
+.catalogo-estado h2,
+.catalogo-estado h3,
+.catalogo-estado p {
+  margin: 0;
+}
+
+.catalogo-encabezado h1 {
+  color: var(--texto-principal);
+  font-family: var(--fuente-syne);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+.catalogo-encabezado p {
+  margin-top: var(--espacio-3);
+  color: var(--texto-secundario);
+  font-family: var(--fuente-inter);
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.catalogo-seccion {
+  margin-top: var(--espacio-8);
+}
+
+.catalogo-seccion > h2 {
+  margin-bottom: var(--espacio-4);
+  color: var(--texto-principal);
+  font-family: var(--fuente-syne);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.catalogo-generos-lista,
+.catalogo-albumes-lista,
+.catalogo-artistas-lista,
+.catalogo-canciones-lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catalogo-generos-lista {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--espacio-4);
+}
+
+.catalogo-generos-lista > li,
+.catalogo-albumes-lista > li {
+  min-width: 0;
+}
+
+.catalogo-estado,
+.catalogo-vacio {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  min-height: var(--espacio-16);
+  padding: var(--espacio-4);
+  border-radius: var(--radio-lg);
+  color: var(--texto-secundario);
+  background: var(--fondo-elevada);
+  font-family: var(--fuente-inter);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.catalogo-vacio {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.catalogo-estado-error {
+  justify-content: space-between;
+}
+
+.catalogo-estado-error h3,
+.catalogo-vacio h3 {
+  color: var(--texto-principal);
+  font-family: var(--fuente-syne);
+  font-size: 1rem;
+  line-height: 1.375rem;
+}
+
+.catalogo-estado-error button {
+  min-height: var(--espacio-12);
+  padding-inline: var(--espacio-4);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: var(--radio-completo);
+  color: var(--texto-principal);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.catalogo-estado-error button:hover {
+  background: var(--fondo-superficie);
+}
+
+.catalogo-indicador {
+  flex: 0 0 auto;
+  width: var(--espacio-4);
+  height: var(--espacio-4);
+  border: 2px solid var(--borde-fuerte);
+  border-top-color: var(--marca-primario);
+  border-radius: var(--radio-completo);
+  animation: catalogo-giro 800ms linear infinite;
+}
+
+@keyframes catalogo-giro {
+  to { transform: rotate(360deg); }
+}
+
+.catalogo-albumes-lista {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--espacio-4);
+}
+
+.catalogo-artistas-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: var(--espacio-3);
+}
+
+.catalogo-artista {
+  display: grid;
+  grid-template-columns: var(--espacio-16) minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--espacio-3);
+  padding: var(--espacio-3);
+  border-radius: var(--radio-lg);
+  background: var(--fondo-elevada);
+}
+
+.catalogo-artista-sin-portada {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.catalogo-artista-portada {
+  grid-row: span 2;
+  display: block;
+  overflow: hidden;
+  width: var(--espacio-16);
+  aspect-ratio: 1;
+  border-radius: var(--radio-md);
+}
+
+.catalogo-artista-portada svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.catalogo-artista-nombre {
+  min-width: 0;
+  color: var(--texto-principal);
+  font-family: var(--fuente-inter);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.catalogo-artista-etiqueta {
+  color: var(--texto-secundario);
+  font-family: var(--fuente-inter);
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.catalogo-canciones-lista {
+  display: grid;
+}
+
+.catalogo-canciones-lista > li {
+  display: grid;
+  grid-template-columns: var(--espacio-6) minmax(0, 1fr) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--espacio-3);
+  min-height: var(--espacio-12);
+  padding-inline: var(--espacio-3);
+  border-bottom: 1px solid var(--borde-sutil);
+  font-family: var(--fuente-inter);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.catalogo-cancion-numero,
+.catalogo-cancion-duracion {
+  color: var(--texto-secundario);
+  font-variant-numeric: tabular-nums;
+}
+
+.catalogo-cancion-artista {
+  overflow: hidden;
+  color: var(--texto-secundario);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.catalogo-destacados .destacados {
+  padding-block: var(--espacio-8) 0;
+}
+
+.catalogo-destacados .destacados-tarjeta,
+.catalogo-destacados .destacados-tarjeta:hover {
+  padding: 0;
+  background: transparent;
+}
+
+.catalogo :focus-visible {
+  outline: 3px solid var(--marca-primario);
+  outline-offset: 3px;
+}
+
+.estado-ruta {
+  min-height: var(--espacio-16);
+  padding: var(--espacio-8);
+  border-radius: var(--radio-xl);
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+}
+
+.estado-ruta h1 {
+  margin: 0;
+  font-family: var(--fuente-syne);
+  font-size: 1.75rem;
+  line-height: 2.125rem;
+}
+
+.estado-ruta p {
+  color: var(--texto-secundario);
+}
+
+@media (max-width: 1000px) {
+  .catalogo-generos-lista {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .catalogo-albumes-lista {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .catalogo {
+    padding-block: var(--espacio-4) var(--espacio-8);
+  }
+
+  .catalogo-panel {
+    padding: var(--espacio-4);
+    border-radius: var(--radio-lg);
+  }
+
+  .catalogo-encabezado {
+    margin-bottom: var(--espacio-6);
+  }
+
+  .catalogo-encabezado h1 {
+    font-size: 1.75rem;
+    line-height: 2rem;
+  }
+
+  .catalogo-seccion {
+    margin-top: var(--espacio-6);
+  }
+
+  .catalogo-seccion > h2 {
+    font-size: 1.25rem;
+    line-height: 1.625rem;
+  }
+
+  .catalogo-generos-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--espacio-3);
+  }
+
+  .catalogo-albumes-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--espacio-3);
+  }
+
+  .catalogo-canciones-lista > li {
+    grid-template-columns: var(--espacio-6) minmax(0, 1fr) auto;
+    gap: var(--espacio-2);
+  }
+
+  .catalogo-cancion-artista {
+    grid-column: 2;
+  }
+
+  .catalogo-cancion-duracion {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+
+  .catalogo-destacados .destacados {
+    padding-block-start: var(--espacio-6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalogo-indicador {
+    animation: none;
+  }
+}

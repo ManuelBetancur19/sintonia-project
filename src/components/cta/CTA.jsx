@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+import { RUTAS } from "../../rutas.js";
 import "./CTA.css";
 
 export default function CTA({ textos }) {
@@ -10,9 +12,9 @@ export default function CTA({ textos }) {
         <h2 id="inicio-cta-titulo">{cta.titulo}</h2>
         <p>{cta.texto}</p>
       </div>
-      <a className="inicio-cta-enlace" href="/crear-cuenta">
+      <Link className="inicio-cta-enlace" to={RUTAS.crearCuenta}>
         {cta.botones.crearCuentaGratis}
-      </a>
+      </Link>
     </section>
   );
 }

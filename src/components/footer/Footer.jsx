@@ -1,5 +1,7 @@
 import { useId } from "react";
+import { Link } from "react-router";
 import logo from "../../assets/logo/logo.svg";
+import { RUTAS } from "../../rutas.js";
 import "./Footer.css";
 
 export default function Footer({ textos }) {
@@ -21,9 +23,9 @@ export default function Footer({ textos }) {
       <div className="pie-interior">
         <div className="pie-superior">
           <div className="pie-marca">
-            <a className="pie-logo" href="/" aria-label={nombreSitio}>
+            <Link className="pie-logo" to={RUTAS.inicio} aria-label={nombreSitio}>
               <img src={logo} alt="" />
-            </a>
+            </Link>
             <p>{footer.lema}</p>
           </div>
 
@@ -31,12 +33,12 @@ export default function Footer({ textos }) {
             <h2 id={idExplora}>{footer.columnas.explora.titulo}</h2>
             <ul>
               <li>
-                <a href="/">{footer.columnas.explora.enlaces.inicio}</a>
+                <Link to={RUTAS.inicio}>{footer.columnas.explora.enlaces.inicio}</Link>
               </li>
               <li>
-                <a href="/catalogo">
+                <Link to={RUTAS.catalogo}>
                   {footer.columnas.explora.enlaces.catalogo}
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
@@ -45,14 +47,14 @@ export default function Footer({ textos }) {
             <h2 id={idCuenta}>{footer.columnas.cuenta.titulo}</h2>
             <ul>
               <li>
-                <a href="/ingresar">
+                <Link to={RUTAS.ingresar}>
                   {footer.columnas.cuenta.enlaces.ingresar}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/crear-cuenta">
+                <Link to={RUTAS.crearCuenta}>
                   {footer.columnas.cuenta.enlaces.crearCuenta}
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

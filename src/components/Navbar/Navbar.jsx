@@ -1,16 +1,11 @@
 import { useEffect, useId, useRef, useState } from "react";
+import { Link, useLocation } from "react-router";
 import Icono from "../Icono/Icono.jsx";
 import PanelAccesibilidad from "./PanelAccesibilidad.jsx";
 import { useAccesibilidad } from "../../hooks/useAccesibilidad.js";
 import logo from "../../assets/logo/logo.svg";
+import { RUTAS } from "../../rutas.js";
 import "./Navbar.css";
-
-const RUTAS = {
-  inicio: "/",
-  catalogo: "/catalogo",
-  ingresar: "/ingresar",
-  crearCuenta: "/crear-cuenta",
-};
 
 export default function Navbar({
   textos,
@@ -19,11 +14,11 @@ export default function Navbar({
   recargar,
   idioma,
   cambiarIdioma,
-  activo,
 }) {
   const [abierto, setAbierto] = useState(false);
   const botonMenu = useRef(null);
   const idPanel = useId();
+  const location = useLocation();
   const estadoAccesibilidad = useAccesibilidad();
 
   const nav = textos?.navbar;
@@ -67,19 +62,19 @@ export default function Navbar({
       className={`navbar${abierto ? " menu-abierto" : ""}`}
     >
       <nav className="navbar-interior" aria-label={nav?.aria?.navegacion}>
-        <a
+        <Link
           className="navbar-marca"
-          href={RUTAS.inicio}
+          to={RUTAS.inicio}
           aria-label={nav?.logo?.aria}
           onClick={cerrarMenu}
         >
           <img className="navbar-logo" src={logo} alt="" />
-        </a>
+        </Link>
 
         {menu && (
-          <a className="navbar-ingresar-rapido" href={RUTAS.ingresar}>
+          <Link className="navbar-ingresar-rapido" to={RUTAS.ingresar}>
             {menu.botones?.invitado?.ingresar}
-          </a>
+          </Link>
         )}
 
         <button
@@ -106,13 +101,13 @@ export default function Navbar({
               <ul className="navbar-enlaces">
                 {enlaces.map(({ clave, texto }) => (
                   <li key={clave}>
-                    <a
-                      href={RUTAS[clave]}
-                      aria-current={activo === clave ? "page" : undefined}
+                    <Link
+                      to={RUTAS[clave]}
+                      aria-current={location.pathname === RUTAS[clave] ? "page" : undefined}
                       onClick={cerrarMenu}
                     >
                       {texto}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -150,30 +145,30 @@ export default function Navbar({
                 />
 
                 <div className="navbar-botones-movil">
-                  <a
+                  <Link
                     className="navbar-crear-cuenta"
-                    href={RUTAS.crearCuenta}
+                    to={RUTAS.crearCuenta}
                     onClick={cerrarMenu}
                   >
                     {menu?.botones?.invitado?.crearCuenta ??
                       nav.botones?.invitado?.crearCuenta}
-                  </a>
+                  </Link>
 
-                  <a
+                  <Link
                     className="navbar-ingresar-menu"
-                    href={RUTAS.ingresar}
+                    to={RUTAS.ingresar}
                     onClick={cerrarMenu}
                   >
                     {menu?.botones?.invitado?.ingresar}
-                  </a>
+                  </Link>
                 </div>
-                <a
+                <Link
                   className="navbar-ingresar-escritorio"
-                  href={RUTAS.ingresar}
+                  to={RUTAS.ingresar}
                   onClick={cerrarMenu}
                 >
                   {nav.botones?.invitado?.ingresar}
-                </a>
+                </Link>
               </div>
             </>
           )}

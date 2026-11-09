@@ -25,7 +25,7 @@ function textosValidos(textos) {
     : null;
 }
 
-export function useExploraGeneros({ textos }) {
+export function useExploraGeneros({ textos, limite = LIMITE_GENEROS }) {
   const textosSeccion = textosValidos(textos);
   const [generos, setGeneros] = useState([]);
   const [totalGeneros, setTotalGeneros] = useState(null);
@@ -47,7 +47,7 @@ export function useExploraGeneros({ textos }) {
         const lista = Array.isArray(respuesta?.datos) ? respuesta.datos : [];
         if (vigente) {
           setTotalGeneros(lista.length);
-          setGeneros(lista.slice(0, LIMITE_GENEROS));
+          setGeneros(lista.slice(0, limite));
         }
       } catch (errorCarga) {
         if (vigente) {
@@ -63,7 +63,7 @@ export function useExploraGeneros({ textos }) {
     return () => {
       vigente = false;
     };
-  }, [intento]);
+  }, [intento, limite]);
 
   return {
     textos: textosSeccion,

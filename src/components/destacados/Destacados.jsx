@@ -1,4 +1,6 @@
-import PortadaAlbum from "./PortadaAlbum.jsx";
+import { Link } from "react-router";
+import TarjetaAlbum from "../albumes/TarjetaAlbum.jsx";
+import { RUTAS } from "../../rutas.js";
 import "./Destacados.css";
 
 export default function Destacados({ textos, albumes, cargando, error, recargar }) {
@@ -11,10 +13,10 @@ export default function Destacados({ textos, albumes, cargando, error, recargar 
     <section className="destacados" aria-labelledby="destacados-titulo">
       <header className="destacados-cabecera">
         <h2 id="destacados-titulo">{destacados.titulo}</h2>
-        <a className="destacados-descubrir" href="/catalogo">
+        <Link className="destacados-descubrir" to={RUTAS.catalogo}>
           {destacados.enlaces.descubrirMas}
           <span aria-hidden="true">→</span>
-        </a>
+        </Link>
       </header>
 
       {cargando && (
@@ -45,16 +47,7 @@ export default function Destacados({ textos, albumes, cargando, error, recargar 
           {albumes.map((album) => {
             return (
               <li key={album.id}>
-                <a
-                  className="destacados-tarjeta"
-                  href={`/albumes/${encodeURIComponent(album.id)}`}
-                >
-                  <span className="destacados-portada" aria-hidden="true">
-                    <PortadaAlbum portada={album.portada} />
-                  </span>
-                  <span className="destacados-album-titulo">{album.titulo}</span>
-                  <span className="destacados-artista">{album.artista?.nombre}</span>
-                </a>
+                <TarjetaAlbum album={album} />
               </li>
             );
           })}

@@ -37,7 +37,7 @@
 }
 
 .explora-generos-catalogo:focus-visible,
-.explora-generos-tarjeta:focus-visible {
+.genero-tarjeta:focus-visible {
   outline: 3px solid var(--marca-primario);
   outline-offset: 3px;
 }
@@ -49,39 +49,6 @@
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.explora-generos-tarjeta {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  border-radius: var(--radio-lg);
-  text-decoration: none;
-  transition: transform 160ms ease;
-}
-
-.explora-generos-tarjeta:hover {
-  transform: translateY(-2px);
-}
-
-.explora-generos-imagen {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 263 / 132;
-  border-radius: inherit;
-}
-
-.explora-generos-solo-lectores {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 .explora-generos-estado {
@@ -170,7 +137,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .explora-generos-tarjeta,
   .explora-generos-indicador {
     animation: none;
     transition: none;
