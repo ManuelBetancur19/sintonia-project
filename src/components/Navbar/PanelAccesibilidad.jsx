@@ -1,3 +1,4 @@
+// RESPONSABILIDAD: Presenta y controla las preferencias de accesibilidad.
 import { useEffect, useId, useRef, useState } from "react";
 import Icono from "../Icono/Icono.jsx";
 import {
@@ -7,12 +8,15 @@ import {
 } from "../../hooks/useAccesibilidad.js";
 import "./PanelAccesibilidad.css";
 
+// Interruptor reutilizable que muestra una opción con su ayuda y avisa el nuevo valor.
 function Interruptor({ id, etiqueta, ayuda, valor, alCambiar }) {
+  // Id derivado para enlazar el texto de ayuda con el input.
   const idAyuda = `${id}-ayuda`;
 
   return (
     <div className="navbar-accesibilidad-opcion">
       <div className="navbar-accesibilidad-copia">
+        {/* [ACCESIBILIDAD] La etiqueta se asocia al input con htmlFor y también activa el interruptor al pulsarla. */}
         <label className="cuerpo-p-fuerte" htmlFor={id}>
           {etiqueta}
         </label>
@@ -21,6 +25,7 @@ function Interruptor({ id, etiqueta, ayuda, valor, alCambiar }) {
         </p>
       </div>
       <span className="navbar-accesibilidad-switch">
+        {/* [ACCESIBILIDAD] role="switch" lo anuncia como interruptor; aria-describedby añade la ayuda como descripción. */}
         <input
           id={id}
           type="checkbox"
@@ -29,6 +34,7 @@ function Interruptor({ id, etiqueta, ayuda, valor, alCambiar }) {
           aria-describedby={idAyuda}
           onChange={(evento) => alCambiar(evento.target.checked)}
         />
+        {/* [ACCESIBILIDAD] La pista y la perilla son solo visuales y se ocultan a lectores de pantalla. */}
         <span className="navbar-accesibilidad-switch-pista" aria-hidden="true">
           <span />
         </span>
@@ -43,15 +49,20 @@ export default function PanelAccesibilidad({
   ariaBoton,
   estado,
 }) {
+  // [LOCAL] Controla si el panel está abierto.
   const [abierto, setAbierto] = useState(false);
+  // Referencias: el contenedor detecta clics fuera; el botón y el diálogo reciben el foco.
   const contenedor = useRef(null);
   const boton = useRef(null);
   const dialogo = useRef(null);
+  // Recuerda si el panel estuvo abierto para no mover el foco en el primer render.
   const estabaAbierto = useRef(false);
+  // Ids únicos que enlazan el diálogo con su botón y su título.
   const id = useId();
   const idDialogo = `${id}-dialogo`;
   const idTitulo = `${id}-titulo`;
 
+  // [ACCESIBILIDAD] Lleva el foco al diálogo al abrirlo y al disparador al cerrarlo.
   useEffect(() => {
     if (abierto) {
       dialogo.current?.focus();
@@ -62,12 +73,15 @@ export default function PanelAccesibilidad({
   }, [abierto]);
 
   useEffect(() => {
+    // Solo escucha eventos globales mientras el panel está abierto.
     if (!abierto) return undefined;
 
+    // [ACCESIBILIDAD] Permite cerrar el panel con Escape o al pulsar fuera de él.
     function cerrarAlPresionarAfuera(evento) {
       if (!contenedor.current?.contains(evento.target)) setAbierto(false);
     }
 
+    // Escape cierra el panel sin que el evento llegue a otros manejadores.
     function cerrarConEscape(evento) {
       if (evento.key === "Escape") {
         evento.preventDefault();
@@ -78,21 +92,26 @@ export default function PanelAccesibilidad({
 
     document.addEventListener("pointerdown", cerrarAlPresionarAfuera);
     document.addEventListener("keydown", cerrarConEscape, true);
+    // Quita los listeners al cerrar o desmontar para no dejarlos activos.
     return () => {
       document.removeEventListener("pointerdown", cerrarAlPresionarAfuera);
       document.removeEventListener("keydown", cerrarConEscape, true);
     };
   }, [abierto]);
 
+  // No renderiza el panel hasta que los textos estén disponibles.
   if (!textos) return null;
 
+  // Inserta el tamaño actual en la plantilla de texto, reemplazando "{valor}".
   const valorTamano = textos.tamanoTexto.valor.replace(
     "{valor}",
     String(estado.tamanoTexto),
   );
 
   return (
+    // Contenedor de referencia para detectar clics fuera del panel.
     <div className="navbar-accesibilidad" ref={contenedor}>
+      {/* [ACCESIBILIDAD] aria-expanded y aria-controls indican el estado y el panel que abre; aria-label da el nombre accesible. */}
       <button
         ref={boton}
         type="button"
@@ -104,11 +123,13 @@ export default function PanelAccesibilidad({
         onClick={() => setAbierto((valor) => !valor)}
       >
         <Icono nombre="accesibilidad" />
+        {/* Etiqueta visible solo en móvil; el CSS la oculta en escritorio. */}
         <span className="navbar-accesibilidad-etiqueta-movil cuerpo-p-fuerte">
           {etiquetaMovil}
         </span>
       </button>
 
+      {/* [ACCESIBILIDAD] Diálogo nombrado por su título; tabIndex="-1" permite enfocarlo por código y hidden lo oculta cuando está cerrado. */}
       <section
         id={idDialogo}
         ref={dialogo}
@@ -119,9 +140,11 @@ export default function PanelAccesibilidad({
         hidden={!abierto}
       >
         <header className="navbar-accesibilidad-cabecera">
+          {/* [ACCESIBILIDAD] El id enlaza este título con aria-labelledby del diálogo. */}
           <h2 className="titular-h4" id={idTitulo}>
             {textos.titulo}
           </h2>
+          {/* [ACCESIBILIDAD] El botón solo tiene icono, por eso lleva aria-label. */}
           <button
             type="button"
             className="navbar-accesibilidad-cerrar"
@@ -132,6 +155,7 @@ export default function PanelAccesibilidad({
           </button>
         </header>
 
+        {/* Control del tamaño del texto: cada botón se deshabilita al llegar a su límite. */}
         <div className="navbar-accesibilidad-tamano">
           <span className="cuerpo-p-fuerte">{textos.tamanoTexto.etiqueta}</span>
           <div className="navbar-accesibilidad-control-tamano">
@@ -143,6 +167,7 @@ export default function PanelAccesibilidad({
             >
               <Icono nombre="menos" />
             </button>
+            {/* [ACCESIBILIDAD] aria-live="polite" anuncia el nuevo tamaño sin interrumpir la lectura. */}
             <span className="cuerpo-p-fuerte" aria-live="polite">
               {valorTamano}
             </span>
@@ -157,6 +182,7 @@ export default function PanelAccesibilidad({
           </div>
         </div>
 
+        {/* [LOCAL] Interruptores de preferencias; cada uno toma su valor y su setter del estado de accesibilidad. */}
         <div className="navbar-accesibilidad-opciones">
           <Interruptor
             id={`${id}-contraste`}
@@ -189,6 +215,7 @@ export default function PanelAccesibilidad({
         </div>
 
         <div className="navbar-accesibilidad-pie">
+          {/* Muestra la nota solo cuando las preferencias se pueden guardar. */}
           {estado.puedeGuardar() ? (
             <p className="detalle-nota">{textos.mensajes.nota}</p>
           ) : null}
@@ -196,6 +223,7 @@ export default function PanelAccesibilidad({
             <span className="navbar-accesibilidad-declaracion detalle-nota">
               {textos.enlaces.declaracion}
             </span>
+            {/* Vuelve las preferencias a su estado inicial. */}
             <button type="button" onClick={estado.restablecer}>
               {textos.botones.restablecer}
             </button>

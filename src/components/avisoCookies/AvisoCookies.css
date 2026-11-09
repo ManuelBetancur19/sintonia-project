@@ -1,3 +1,7 @@
+/* RESPONSABILIDAD: Estiliza el aviso de cookies y su posición fija. */
+
+/* Contenedor */
+/* Fijo al borde inferior con margen; el alto máximo y el scroll interno evitan que se salga del viewport. */
 .aviso-cookies {
   position: fixed;
   z-index: 5;
@@ -21,6 +25,8 @@
   animation: aviso-cookies-entrada 240ms ease-out both;
 }
 
+/* Texto */
+/* min-width: 0 permite que el texto se contraiga dentro de la columna de la grilla. */
 .aviso-cookies-copia {
   min-width: 0;
 }
@@ -35,6 +41,7 @@
   color: var(--texto-secundario);
 }
 
+/* Acciones */
 .aviso-cookies-acciones {
   display: flex;
   flex: 0 0 auto;
@@ -78,11 +85,15 @@
   background: var(--fondo-elevada);
 }
 
+/* Foco */
+/* [ACCESIBILIDAD] Resalta las acciones del aviso al navegar con teclado. */
 .aviso-cookies :focus-visible {
   outline: 3px solid var(--marca-primario);
   outline-offset: 3px;
 }
 
+/* Entrada */
+/* Aparece desde abajo con un desvanecimiento. */
 @keyframes aviso-cookies-entrada {
   from {
     opacity: 0;
@@ -95,6 +106,9 @@
   }
 }
 
+/* Espacio reservado */
+/* Reserva el alto del aviso para que no tape el final del contenido ni los anclas;
+   vale 0 cuando la variable no está definida. */
 html {
   scroll-padding-bottom: var(--altura-aviso-cookies, 0px);
 }
@@ -103,10 +117,13 @@ html {
   padding-bottom: var(--altura-aviso-cookies, 0px);
 }
 
+/* [ACCESIBILIDAD] Oculta el borde cuando el foco del contenido se mueve por código. */
 #contenido:focus:not(:focus-visible) {
   outline: none;
 }
 
+/* Móvil */
+/* Apila el texto sobre las acciones y reparte los botones en dos columnas iguales. */
 @media (max-width: 640px) {
   .aviso-cookies {
     grid-template-columns: minmax(0, 1fr);
@@ -126,6 +143,8 @@ html {
   }
 }
 
+/* Movimiento reducido */
+/* [ACCESIBILIDAD] Evita animar el aviso si el usuario reduce movimiento. */
 @media (prefers-reduced-motion: reduce) {
   .aviso-cookies {
     animation: none;

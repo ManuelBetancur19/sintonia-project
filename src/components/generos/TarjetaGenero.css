@@ -1,3 +1,8 @@
+/* RESPONSABILIDAD: Estiliza la tarjeta de género y su nombre accesible oculto visualmente. */
+
+/* Tarjeta */
+/* overflow: hidden recorta la imagen a las esquinas redondeadas;
+   position: relative ancla el texto oculto, que se posiciona de forma absoluta. */
 .genero-tarjeta {
   position: relative;
   display: block;
@@ -7,20 +12,26 @@
   transition: transform 160ms ease;
 }
 
+/* Al pasar el cursor, la tarjeta se eleva ligeramente. */
 .genero-tarjeta:hover {
   transform: translateY(-2px);
 }
 
+/* Foco y selección */
+/* [ACCESIBILIDAD] Hace visible el foco al recorrer las tarjetas con el teclado. */
 .genero-tarjeta:focus-visible {
   outline: 3px solid var(--marca-primario);
   outline-offset: 3px;
 }
 
+/* Marca el género activo con un contorno más fino que el del foco. */
 .genero-tarjeta.is-seleccionado {
   outline: 2px solid var(--marca-primario);
   outline-offset: 2px;
 }
 
+/* Imagen */
+/* La proporción fija reserva el espacio antes de que cargue la imagen y evita saltos de diseño. */
 .genero-tarjeta-imagen {
   display: block;
   width: 100%;
@@ -29,6 +40,9 @@
   border-radius: inherit;
 }
 
+/* Texto solo para lectores de pantalla */
+/* [ACCESIBILIDAD] Oculta el nombre del género a la vista sin quitarlo del árbol de accesibilidad,
+   para que el enlace tenga nombre aunque la tarjeta solo muestre una imagen. */
 .genero-tarjeta-solo-lectores {
   position: absolute;
   width: 1px;
@@ -41,6 +55,8 @@
   border: 0;
 }
 
+/* Movimiento reducido */
+/* [ACCESIBILIDAD] Desactiva el desplazamiento animado cuando se reduce movimiento. */
 @media (prefers-reduced-motion: reduce) {
   .genero-tarjeta {
     transition: none;

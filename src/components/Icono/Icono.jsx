@@ -1,3 +1,6 @@
+// RESPONSABILIDAD: Dibuja los iconos reutilizables de la interfaz.
+
+// [STATIC] Trazos SVG de cada icono, indexados por nombre y dibujados en una cuadrícula de 24x24.
 const TRAZOS = {
   buscar: <><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 4.5 4.5" /></>,
   menu: <><path d="M4 6h16M4 12h16M4 18h16" /></>,
@@ -9,6 +12,9 @@ const TRAZOS = {
   accesibilidad: <><circle cx="12" cy="4" r="2" /><path d="M4 8h16M12 6v8m0 0-4 7m4-7 4 7" /></>,
 };
 
+// Props: nombre elige el icono de TRAZOS; si no existe, el svg se muestra vacío.
 export default function Icono({ nombre }) {
+  // [ACCESIBILIDAD] Mantiene el icono fuera del nombre anunciado por su control contenedor y evita que reciba foco.
+  // Usa currentColor para heredar el color del texto del control que lo contiene.
   return <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">{TRAZOS[nombre]}</svg>;
 }

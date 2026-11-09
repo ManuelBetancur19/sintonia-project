@@ -1,9 +1,10 @@
-/* Tokens de diseño de Sintonía, exportados del archivo de Figma. */
-/* Nombres iguales a las variables de Figma: "fondo/pagina" se usa como var(--fondo-pagina). */
-
+/* RESPONSABILIDAD: Define los tokens visuales y estilos tipográficos del sistema. */
 @import url("https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Syne:wght@700;800&display=swap");
 
+/* Tokens base */
+
+/* Valores por defecto de toda la interfaz; el modo oscuro es la base y los demás modos los sobrescriben. */
 :root {
   /* Color (modo Oscuro) */
   --fondo-base: #0c0b10;
@@ -37,6 +38,7 @@
   --portada-4: #f5b544;
   --portada-5: #ff5fa2;
   --portada-6: #4c8dff;
+  /* Colores fijos: no cambian entre modos. */
   --fijo-negro: #0c0b10;
   --fijo-blanco: #ffffff;
   /* Medidas */
@@ -64,6 +66,7 @@
 }
 
 /* Modo Claro: se activa con <html data-tema="claro"> */
+/* Solo redefine los tokens que cambian; el resto (marca primaria, portadas, colores fijos) conserva el valor del modo oscuro. */
 [data-tema="claro"] {
   --fondo-base: #f6f4ee;
   --fondo-superficie: #ffffff;
@@ -91,6 +94,10 @@
 }
 
 /* Estilos de texto de Figma como clases. */
+
+/* Titulares */
+
+/* Usan la fuente Syne con espaciado de letras negativo, que se reduce a medida que baja el tamaño. */
 .titular-gigante {
   font-family: var(--fuente-syne);
   font-weight: 800;
@@ -138,6 +145,9 @@
   line-height: 1.375rem;
 }
 
+/* Cuerpo */
+
+/* Texto corrido en Inter; las variantes -fuerte usan peso 600 con las mismas medidas. */
 .cuerpo-g {
   font-family: var(--fuente-inter);
   font-weight: 400;
@@ -173,6 +183,8 @@
   line-height: 1.25rem;
 }
 
+/* Detalle */
+
 .detalle-nota {
   font-family: var(--fuente-inter);
   font-weight: 400;
@@ -187,6 +199,7 @@
   line-height: 1rem;
 }
 
+/* Etiqueta corta en mayúsculas con espaciado de letras amplio. */
 .detalle-etiqueta {
   font-family: var(--fuente-inter);
   font-weight: 600;
@@ -196,6 +209,9 @@
   text-transform: uppercase;
 }
 
+/* Datos */
+
+/* Cifra destacada en Syne para números y métricas. */
 .dato-cifra {
   font-family: var(--fuente-syne);
   font-weight: 700;
@@ -204,7 +220,10 @@
   letter-spacing: -0.010em;
 }
 
+/* Modo de alto contraste */
+
 /* Paleta de alto contraste: conserva el tema oscuro con texto y bordes más claros. */
+/* Al ir después del modo claro, sus valores prevalecen si ambos atributos están activos. */
 [data-alto-contraste="true"] {
   --fondo-base: #000000;
   --fondo-superficie: #050505;

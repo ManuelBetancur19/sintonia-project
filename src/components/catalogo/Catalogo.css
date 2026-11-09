@@ -1,3 +1,6 @@
+/* RESPONSABILIDAD: Define la presentación adaptable de la página de catálogo. */
+
+/* Contenedor y encabezado */
 .catalogo {
   padding-block: var(--espacio-8) var(--espacio-12);
 }
@@ -13,6 +16,7 @@
   margin-bottom: var(--espacio-8);
 }
 
+/* Quita los márgenes por defecto de los títulos y textos; el espaciado se define por contenedor. */
 .catalogo-encabezado h1,
 .catalogo-encabezado p,
 .catalogo-seccion > h2,
@@ -41,6 +45,7 @@
   line-height: 1.5rem;
 }
 
+/* Secciones y listas */
 .catalogo-seccion {
   margin-top: var(--espacio-8);
 }
@@ -54,6 +59,7 @@
   line-height: 1.2;
 }
 
+/* Quita viñetas y espaciado de las listas; la disposición la define cada una por separado. */
 .catalogo-generos-lista,
 .catalogo-albumes-lista,
 .catalogo-artistas-lista,
@@ -63,17 +69,20 @@
   list-style: none;
 }
 
+/* Géneros */
 .catalogo-generos-lista {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--espacio-4);
 }
 
+/* min-width: 0 evita que el contenido de una tarjeta ensanche su columna de la grilla. */
 .catalogo-generos-lista > li,
 .catalogo-albumes-lista > li {
   min-width: 0;
 }
 
+/* Estados de carga, error y vacío */
 .catalogo-estado,
 .catalogo-vacio {
   display: flex;
@@ -89,11 +98,13 @@
   line-height: 1.25rem;
 }
 
+/* El estado vacío apila su contenido en columna en lugar de alinearlo en fila. */
 .catalogo-vacio {
   align-items: flex-start;
   flex-direction: column;
 }
 
+/* En el error, el mensaje queda a un lado y el botón de reintento al otro. */
 .catalogo-estado-error {
   justify-content: space-between;
 }
@@ -121,6 +132,8 @@
   background: var(--fondo-superficie);
 }
 
+/* Indicador de carga */
+/* Círculo con un solo borde de color que, al girar, forma el indicador. */
 .catalogo-indicador {
   flex: 0 0 auto;
   width: var(--espacio-4);
@@ -135,12 +148,15 @@
   to { transform: rotate(360deg); }
 }
 
+/* Álbumes */
 .catalogo-albumes-lista {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: var(--espacio-4);
 }
 
+/* Artistas */
+/* Las columnas se ajustan solas según el ancho disponible, sin saltos por breakpoint. */
 .catalogo-artistas-lista {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
@@ -157,10 +173,12 @@
   background: var(--fondo-elevada);
 }
 
+/* Sin portada, la tarjeta usa una sola columna para que el texto ocupe todo el ancho. */
 .catalogo-artista-sin-portada {
   grid-template-columns: minmax(0, 1fr);
 }
 
+/* La portada ocupa las dos filas de texto (nombre y etiqueta) a su lado. */
 .catalogo-artista-portada {
   grid-row: span 2;
   display: block;
@@ -192,10 +210,12 @@
   line-height: 1rem;
 }
 
+/* Canciones */
 .catalogo-canciones-lista {
   display: grid;
 }
 
+/* Cada fila tiene cuatro columnas: número, título, artista y duración. */
 .catalogo-canciones-lista > li {
   display: grid;
   grid-template-columns: var(--espacio-6) minmax(0, 1fr) minmax(0, 1fr) auto;
@@ -209,12 +229,14 @@
   line-height: 1.25rem;
 }
 
+/* Números de ancho fijo para que las cifras queden alineadas entre filas. */
 .catalogo-cancion-numero,
 .catalogo-cancion-duracion {
   color: var(--texto-secundario);
   font-variant-numeric: tabular-nums;
 }
 
+/* Un artista largo se recorta con puntos suspensivos en lugar de romper la fila. */
 .catalogo-cancion-artista {
   overflow: hidden;
   color: var(--texto-secundario);
@@ -222,6 +244,8 @@
   white-space: nowrap;
 }
 
+/* Destacados dentro del catálogo */
+/* Ajusta el bloque de destacados reutilizado en esta página: menos espacio superior y tarjetas sin fondo ni relleno. */
 .catalogo-destacados .destacados {
   padding-block: var(--espacio-8) 0;
 }
@@ -232,11 +256,14 @@
   background: transparent;
 }
 
+/* Foco */
+/* [ACCESIBILIDAD] Hace visible el foco de teclado en los controles del catálogo. */
 .catalogo :focus-visible {
   outline: 3px solid var(--marca-primario);
   outline-offset: 3px;
 }
 
+/* Estado de ruta */
 .estado-ruta {
   min-height: var(--espacio-16);
   padding: var(--espacio-8);
@@ -256,6 +283,8 @@
   color: var(--texto-secundario);
 }
 
+/* Tablet */
+/* Reduce las grillas de géneros y álbumes a tres columnas. */
 @media (max-width: 1000px) {
   .catalogo-generos-lista {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -266,6 +295,8 @@
   }
 }
 
+/* Móvil */
+/* Reduce espacios y tipografía, y pasa géneros y álbumes a dos columnas. */
 @media (max-width: 640px) {
   .catalogo {
     padding-block: var(--espacio-4) var(--espacio-8);
@@ -304,6 +335,7 @@
     gap: var(--espacio-3);
   }
 
+  /* Las canciones pasan a tres columnas: el artista baja a una segunda línea bajo el título. */
   .catalogo-canciones-lista > li {
     grid-template-columns: var(--espacio-6) minmax(0, 1fr) auto;
     gap: var(--espacio-2);
@@ -313,6 +345,7 @@
     grid-column: 2;
   }
 
+  /* La duración abarca las dos líneas y queda alineada a la derecha. */
   .catalogo-cancion-duracion {
     grid-column: 3;
     grid-row: 1 / span 2;
@@ -323,6 +356,8 @@
   }
 }
 
+/* Movimiento reducido */
+/* [ACCESIBILIDAD] Detiene el indicador animado cuando se reduce movimiento. */
 @media (prefers-reduced-motion: reduce) {
   .catalogo-indicador {
     animation: none;

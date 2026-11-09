@@ -1,14 +1,7 @@
-/* ------------------------------------------------------------
-   CONTENEDOR DEL SITIO
-   ------------------------------------------------------------ */
-
-/* Envoltorio de toda la página. Se declara dos veces la altura mínima
-   a propósito: 100vh es el respaldo para navegadores antiguos y 100dvh
-   (la altura visible real) lo sobrescribe donde se soporta, evitando
-   el salto de la barra del navegador en móvil. */
-.sitio{
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
+/* RESPONSABILIDAD: Define la estructura global del contenedor de la aplicación. */
+.sitio {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }

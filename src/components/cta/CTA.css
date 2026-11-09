@@ -1,3 +1,7 @@
+/* RESPONSABILIDAD: Estiliza el llamado final a crear una cuenta. */
+
+/* Contenedor */
+/* Franja de color de marca: el texto a la izquierda y el enlace de registro a la derecha. */
 .inicio-cta {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -10,10 +14,13 @@
   background: var(--marca-primario);
 }
 
+/* Texto */
+/* min-width: 0 permite que el texto se contraiga dentro de la columna de la grilla. */
 .inicio-cta-contenido {
   min-width: 0;
 }
 
+/* Hereda el color de la franja para que cambie junto con ella, también en móvil. */
 .inicio-cta h2 {
   margin: 0;
   color: inherit;
@@ -32,6 +39,8 @@
   line-height: 1.5rem;
 }
 
+/* Enlace de registro */
+/* Botón claro sobre la franja de color; el ancho y alto mínimos le dan un área de toque cómoda. */
 .inicio-cta-enlace {
   display: inline-flex;
   flex: 0 0 auto;
@@ -57,11 +66,16 @@
   background: var(--fondo-elevada);
 }
 
+/* Foco */
+/* [ACCESIBILIDAD] Hace visible el foco del enlace de registro. */
 .inicio-cta-enlace:focus-visible {
   outline: 3px solid var(--fondo-base);
   outline-offset: 4px;
 }
 
+/* Móvil */
+/* Apila el texto sobre el enlace e invierte los colores: la franja pasa a superficie neutra
+   y el enlace toma el color de marca, para que siga destacando. */
 @media (max-width: 640px) {
   .inicio-cta {
     display: flex;
@@ -86,6 +100,7 @@
     background: var(--marca-primario-hover);
   }
 
+  /* [ACCESIBILIDAD] El contorno usa el color de marca para verse sobre la superficie clara. */
   .inicio-cta-enlace:focus-visible {
     outline-color: var(--marca-primario);
   }
@@ -95,6 +110,8 @@
   }
 }
 
+/* Movimiento reducido */
+/* [ACCESIBILIDAD] Desactiva la animación del enlace si se reduce movimiento. */
 @media (prefers-reduced-motion: reduce) {
   .inicio-cta-enlace {
     transition: none;

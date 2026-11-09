@@ -1,3 +1,7 @@
+/* RESPONSABILIDAD: Estiliza la composición visual de la sección hero. */
+
+/* Contenedor */
+/* Dos columnas (contenido y collage) que ocupan el alto de la ventana menos 72px del encabezado. */
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
@@ -7,10 +11,12 @@
   padding-block: var(--espacio-8);
 }
 
+/* Permite que la columna se encoja dentro del grid sin desbordar por su contenido. */
 .hero-contenido {
   min-width: 0;
 }
 
+/* Etiqueta */
 .hero-etiqueta {
   display: inline-flex;
   align-items: center;
@@ -25,6 +31,8 @@
   font-weight: 600;
 }
 
+/* Título y subtítulo */
+/* El ancho de 10ch fuerza un título en varias líneas, con interlineado compacto para dar impacto. */
 .hero h1 {
   max-width: 10ch;
   margin: var(--espacio-4) 0 var(--espacio-3);
@@ -46,6 +54,7 @@
   line-height: 1.5rem;
 }
 
+/* Acciones */
 .hero-acciones {
   display: flex;
   flex-wrap: wrap;
@@ -69,6 +78,7 @@
   transition: background-color 160ms ease, border-color 160ms ease;
 }
 
+/* Botón primario: relleno de marca. */
 .hero-boton-primario {
   color: var(--texto-sobre-marca);
   background: var(--marca-primario);
@@ -78,6 +88,7 @@
   background: var(--marca-primario-hover);
 }
 
+/* Botón secundario: solo borde, para que el primario destaque. */
 .hero-boton-secundario {
   border-color: var(--borde-fuerte);
   color: var(--texto-principal);
@@ -88,11 +99,14 @@
   background: var(--fondo-superficie);
 }
 
+/* [ACCESIBILIDAD] Foco visible para navegación con teclado, separado del borde del botón. */
 .hero-boton:focus-visible {
   outline: 3px solid var(--marca-primario);
   outline-offset: 3px;
 }
 
+/* Cifras */
+/* Tres columnas del ancho de su contenido, una por cada par dt/dd de la lista de descripción. */
 .hero-cifras {
   display: grid;
   grid-template-columns: repeat(3, max-content);
@@ -118,6 +132,8 @@
   line-height: 1rem;
 }
 
+/* Collage */
+/* Es el punto de referencia de las ilustraciones y la tarjeta, que se posicionan en porcentajes. */
 .hero-collage {
   position: relative;
   width: 100%;
@@ -133,6 +149,7 @@
   max-width: 100%;
 }
 
+/* El top negativo hace sobresalir la ilustración principal por encima del collage. */
 .hero-ilustracion-principal {
   top: -6%;
   left: 9%;
@@ -151,6 +168,7 @@
   width: 32%;
 }
 
+/* Tarjeta anclada abajo a la derecha del collage, con una ligera inclinación decorativa. */
 .hero-tarjeta {
   position: absolute;
   right: 0;
@@ -172,6 +190,8 @@
   transform: rotate(4deg);
 }
 
+/* Tablet */
+/* Mantiene las dos columnas y reduce espacios y tamaños de texto. */
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
@@ -194,6 +214,8 @@
   }
 }
 
+/* Móvil */
+/* Pasa a una sola columna: deja de usar grid y ajusta la altura al contenido. */
 @media (max-width: 640px) {
   .hero {
     display: block;
@@ -201,12 +223,14 @@
     padding-block: var(--espacio-8) var(--espacio-12);
   }
 
+  /* Oculta etiqueta, cifras y collage; display: none también los quita de los lectores de pantalla. */
   .hero-etiqueta,
   .hero-cifras,
   .hero-collage {
     display: none;
   }
 
+  /* Libera el ancho máximo y suaviza el interlineado para que el título ocupe todo el ancho sin amontonarse. */
   .hero h1 {
     max-width: none;
     margin: var(--espacio-4) 0 var(--espacio-4);
@@ -220,6 +244,7 @@
     line-height: 1.6;
   }
 
+  /* Apila los botones y los estira a todo el ancho. */
   .hero-acciones {
     align-items: stretch;
     flex-direction: column;
@@ -231,6 +256,7 @@
   }
 }
 
+/* [ACCESIBILIDAD] Respeta la preferencia del sistema de reducir animaciones. */
 @media (prefers-reduced-motion: reduce) {
   .hero-boton {
     transition: none;

@@ -1,33 +1,23 @@
-// Hook que carga desde la API los textos del navbar según el idioma,
-// validando la respuesta y manejando carga, error y reintento.
-// ============================================================
-
+// RESPONSABILIDAD: Carga y valida los textos del navbar por idioma.
 import { useEffect, useState } from "react";
 import { API_URL } from "../config";
 
-// Endpoint
+// [STATIC] Endpoint de textos construido a partir de la URL base de configuración.
 const API = `${API_URL}/textos`;
 
-// ------------------------------------------------------------
-// VALIDACIÓN
-// ------------------------------------------------------------
-
-// Verifica que la respuesta de la API traiga todos los textos que
-// necesitan el navbar y el menú móvil. Devuelve solo las secciones
-// del navbar (navbar, menuMovil e idioma.codigos), o lanza un error
-// si falta alguno o está vacío.
+// Verifica que la respuesta traiga todos los textos obligatorios y devuelve solo los que usa el navbar.
 function validarTextos(datos) {
+  // Separa las secciones de la respuesta para acceder a ellas con optional chaining.
   const textos = datos?.textos;
   const nav = textos?.navbar;
   const menu = textos?.menuMovil;
 
-  // Lista de todos los textos obligatorios
+  // Etiquetas obligatorias del navbar de escritorio, el idioma y el menú móvil.
   const etiquetas = [
     nav?.logo?.texto,
     nav?.logo?.aria,
     nav?.aria?.navegacion,
     nav?.aria?.idioma,
-    /* nav?.aria?.accesibilidad, */ // ACCESIBILIDAD
     nav?.enlaces?.catalogo,
     nav?.enlaces?.inicio,
     nav?.botones?.invitado?.ingresar,
@@ -42,11 +32,12 @@ function validarTextos(datos) {
     menu?.botones?.invitado?.crearCuenta,
   ];
 
-  // Cada valor debe ser un string que no esté vacío
+  // Rechaza la respuesta si alguna etiqueta falta, no es texto o está vacía.
   if (!etiquetas.every((valor) => typeof valor === "string" && valor.trim())) {
     throw new Error("La respuesta no contiene los textos del navbar.");
   }
 
+  // Devuelve únicamente las secciones que consume el navbar.
   return {
     navbar: textos.navbar,
     menuMovil: textos.menuMovil,
@@ -54,57 +45,47 @@ function validarTextos(datos) {
   };
 }
 
-// ------------------------------------------------------------
-// HOOK PRINCIPAL
-// ------------------------------------------------------------
-
-// Devuelve: { textos, cargando, error, recargar }
-//   - textos:   textos validados, o null si aún no hay
-//   - cargando: true mientras se hace la petición
-//   - error:    true si la petición o la validación fallaron
-//   - recargar: función para volver a intentar la petición
 export function useTextosNavbar(idioma) {
-  // --- Estados ---
+  // [LOCAL] Estado de la carga: textos, indicador de carga, error y contador para reintentar.
   const [textos, setTextos] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(false);
-  const [intento, setIntento] = useState(0); // Cambiarlo dispara una nueva petición
+  const [intento, setIntento] = useState(0);
 
-  // --- Efecto: pide los textos cuando cambia el idioma o el intento ---
+  // Vuelve a cargar los textos cuando cambia el idioma o se pide un reintento.
   useEffect(() => {
-    // Permite cancelar el fetch (por cambio de idioma, desmontaje o timeout)
+    // [LOCAL] Cancela la solicitud si cambia el idioma, se desmonta el hook o vence el plazo.
     const controlador = new AbortController();
-
-    // Si la API tarda más de 12 segundos, se cancela la petición
     const limite = setTimeout(() => controlador.abort(), 12000);
-
-    // Evita actualizar el estado con respuestas viejas o tras desmontar
+    // Evita actualizar el estado con la respuesta de una solicitud que ya no corresponde.
     let vigente = true;
 
-    // Reinicia el estado antes de cada petición
+    // Reinicia el estado antes de cada carga para no mostrar textos o errores anteriores.
     setCargando(true);
     setError(false);
     setTextos(null);
 
-    // Hace la petición, valida la respuesta y actualiza el estado
     async function cargarTextosNavbar() {
       try {
+        // [API] Obtiene los textos del idioma actual y valida las etiquetas obligatorias.
         const respuesta = await fetch(`${API}?idioma=${idioma}`, {
           signal: controlador.signal,
         });
+        // Trata cualquier respuesta HTTP no exitosa como un fallo de carga.
         if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
-        //Si si respondio los datos correctamente
+
         const datos = await respuesta.json();
         const nuevosTextos = validarTextos(datos);
+        // Guarda los textos solo si la solicitud sigue vigente.
         if (vigente) setTextos(nuevosTextos);
-      } catch (error) {
-        // Solo se reporta el error si esta petición sigue siendo la vigente
+      } catch (errorCarga) {
+        // Registra el fallo y activa el estado de error solo si la solicitud sigue vigente.
         if (vigente) {
-          console.error("Error al cargar los textos:", error);
+          console.error("Error al cargar los textos:", errorCarga);
           setError(true);
         }
       } finally {
-        // Se limpia el timeout y se apaga el estado de carga
+        // Libera el plazo y apaga el indicador de carga, salvo que la solicitud ya sea obsoleta.
         clearTimeout(limite);
         if (vigente) setCargando(false);
       }
@@ -112,7 +93,7 @@ export function useTextosNavbar(idioma) {
 
     cargarTextosNavbar();
 
-    // --- Limpieza: se ejecuta al cambiar idioma/intento o al desmontar ---
+    // Al limpiar el efecto, invalida la solicitud en curso y cancela el plazo y el fetch.
     return () => {
       vigente = false;
       clearTimeout(limite);
@@ -120,12 +101,11 @@ export function useTextosNavbar(idioma) {
     };
   }, [idioma, intento]);
 
-  // --- Valor devuelto por el hook ---
+  // [LOCAL] recargar incrementa el contador de intentos para volver a ejecutar el efecto.
   return {
     textos,
     cargando,
     error,
-    // Incrementa `intento` para volver a lanzar el efecto
     recargar: () => setIntento((valor) => valor + 1),
   };
 }

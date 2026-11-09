@@ -1,3 +1,6 @@
+/* RESPONSABILIDAD: Estiliza las tarjetas y estados de la sección de destacados. */
+
+/* Contenedor y cabecera */
 .destacados {
   padding-block: var(--espacio-8) var(--espacio-12);
 }
@@ -19,6 +22,8 @@
   line-height: 1.625rem;
 }
 
+/* Enlace "descubrir" */
+/* white-space: nowrap evita que el enlace se parta en dos líneas junto al título. */
 .destacados-descubrir {
   display: inline-flex;
   align-items: center;
@@ -36,12 +41,16 @@
   color: var(--marca-primario-hover);
 }
 
+/* Foco */
+/* [ACCESIBILIDAD] Hace visible el foco de teclado en los enlaces de la sección. */
 .destacados-descubrir:focus-visible,
 .destacados-tarjeta:focus-visible {
   outline: 3px solid var(--marca-primario);
   outline-offset: 3px;
 }
 
+/* Lista de tarjetas */
+/* Seis columnas iguales en escritorio; en pantallas menores se reduce o pasa a carrusel. */
 .destacados-lista {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -51,6 +60,9 @@
   list-style: none;
 }
 
+/* Tarjeta */
+/* Sirve tanto de enlace como de botón: se reinician sus estilos nativos (borde, subrayado, alineación).
+   min-width: 0 evita que un título largo ensanche su columna. */
 .destacados-tarjeta {
   display: flex;
   min-width: 0;
@@ -66,11 +78,13 @@
   transition: background-color 160ms ease, transform 160ms ease;
 }
 
+/* Al pasar el cursor, la tarjeta se eleva ligeramente y cambia de fondo. */
 .destacados-tarjeta:hover {
   background: var(--fondo-elevada);
   transform: translateY(-2px);
 }
 
+/* Portada cuadrada que recorta la ilustración; el fondo se ve mientras esta no está disponible. */
 .destacados-portada {
   position: relative;
   display: block;
@@ -87,6 +101,7 @@
   height: 100%;
 }
 
+/* Un título o artista largo se recorta con puntos suspensivos en lugar de romper la tarjeta. */
 .destacados-album-titulo {
   overflow: hidden;
   margin-top: var(--espacio-2);
@@ -110,6 +125,7 @@
   white-space: nowrap;
 }
 
+/* Estados de carga, error y vacío */
 .destacados-estado,
 .destacados-vacio {
   display: flex;
@@ -126,6 +142,7 @@
   line-height: 1.25rem;
 }
 
+/* En el error, el mensaje queda a un lado y el botón de reintento al otro. */
 .destacados-estado-error {
   justify-content: space-between;
 }
@@ -157,6 +174,8 @@
   background: var(--fondo-elevada);
 }
 
+/* Indicador de carga */
+/* Círculo con un solo borde de color que, al girar, forma el indicador. */
 .destacados-indicador {
   width: 18px;
   height: 18px;
@@ -170,6 +189,8 @@
   to { transform: rotate(360deg); }
 }
 
+/* Tablet */
+/* Reduce la lista a tres columnas. */
 @media (max-width: 1000px) {
   .destacados-lista {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -177,6 +198,8 @@
   }
 }
 
+/* Móvil */
+/* La lista pasa a un carrusel horizontal con desplazamiento que se ajusta a cada tarjeta. */
 @media (max-width: 560px) {
   .destacados {
     padding-block: var(--espacio-4) var(--espacio-8);
@@ -194,10 +217,12 @@
     overscroll-behavior-inline: contain;
   }
 
+  /* Oculta la barra de desplazamiento en navegadores basados en WebKit; Firefox usa scrollbar-width. */
   .destacados-lista::-webkit-scrollbar {
     display: none;
   }
 
+  /* Cada tarjeta mide entre 136 y 164 px según el ancho de la pantalla y no se encoge. */
   .destacados-lista > li {
     flex: 0 0 clamp(136px, 42vw, 164px);
     min-width: 0;
@@ -211,6 +236,8 @@
 
 }
 
+/* Movimiento reducido */
+/* [ACCESIBILIDAD] Desactiva las transiciones cuando el usuario reduce movimiento. */
 @media (prefers-reduced-motion: reduce) {
   .destacados-tarjeta,
   .destacados-indicador {

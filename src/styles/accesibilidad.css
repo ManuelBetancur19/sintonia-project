@@ -1,3 +1,9 @@
+/* RESPONSABILIDAD: Aplica las preferencias de accesibilidad a la interfaz. */
+
+/* Movimiento reducido */
+
+/* Desactiva animaciones, transiciones y desplazamiento suave en toda la página, pseudoelementos incluidos.
+   Usa !important para imponerse a las reglas de movimiento de cada componente. */
 html[data-reducir-movimiento="true"],
 html[data-reducir-movimiento="true"] *,
 html[data-reducir-movimiento="true"] *::before,
@@ -7,11 +13,20 @@ html[data-reducir-movimiento="true"] *::after {
   transition: none !important;
 }
 
+/* Subrayado de enlaces */
+
+/* Subraya los enlaces de texto y excluye los que tienen aspecto de botón (registro, ingreso, hero y llamada a la acción). */
 html[data-subrayar-enlaces="true"] a:not(.navbar-crear-cuenta):not(.navbar-ingresar-rapido):not(.navbar-ingresar-menu):not(.hero-boton):not(.inicio-cta-enlace) {
   text-decoration: underline !important;
+  /* Separa el subrayado del texto para que no corte los trazos inferiores de las letras. */
   text-underline-offset: 0.15em;
 }
 
+/* Espaciado de lectura */
+
+/* Amplía interlineado y espaciado de letras y palabras en todo el contenido del body.
+   :where mantiene la especificidad baja, y !important hace que prevalezca sobre los estilos de cada componente.
+   Los valores son los mínimos del criterio WCAG 1.4.12 (espaciado de texto). */
 html[data-espaciado-lectura="true"] :where(body *) {
   line-height: 1.5 !important;
   letter-spacing: 0.12em !important;

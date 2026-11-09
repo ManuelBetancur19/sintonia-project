@@ -1,3 +1,7 @@
+/* RESPONSABILIDAD: Estiliza la navegación de escritorio y el menú móvil. */
+
+/* Barra */
+/* Queda fija en la parte superior mientras se hace scroll. */
 .navbar {
   position: sticky;
   top: 0;
@@ -7,6 +11,7 @@
   font-family: var(--fuente-inter);
 }
 
+/* Contenedor centrado, con 1rem de margen a cada lado y un alto mínimo de 72px. */
 .navbar-interior {
   width: calc(100% - 2rem);
   max-width: var(--ancho-contenido);
@@ -23,22 +28,26 @@
   text-decoration: none;
 }
 
+/* Los botones heredan la tipografía de la barra y muestran cursor de acción. */
 .navbar button {
   font: inherit;
   cursor: pointer;
 }
 
+/* [ACCESIBILIDAD] Distingue con claridad los controles enfocados por teclado. */
 .navbar :focus-visible {
   outline: 3px solid var(--marca-primario);
   outline-offset: 3px;
 }
 
+/* Marca */
 .navbar-marca {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
 }
 
+/* Con el menú abierto, eleva el logo y la hamburguesa por encima del panel a pantalla completa (z-index 20). */
 .navbar.menu-abierto .navbar-marca,
 .navbar.menu-abierto .navbar-icono-hamburguesa {
   position: relative;
@@ -51,11 +60,14 @@
   height: 40px;
 }
 
+/* Controles solo móviles: ocultos en escritorio y mostrados en el bloque de 640px. */
 .navbar-ingresar-rapido,
 .navbar-icono-hamburguesa {
   display: none;
 }
 
+/* Panel y enlaces */
+/* En escritorio el panel agrupa enlaces y acciones en una fila; min-width: 0 evita que desborde. */
 .navbar-panel {
   display: flex;
   flex: 1;
@@ -88,10 +100,13 @@
   color: var(--texto-principal);
 }
 
+/* [ACCESIBILIDAD] Resalta el enlace de la página actual, marcado con aria-current. */
 .navbar-enlaces a[aria-current="page"] {
   color: var(--texto-marca);
 }
 
+/* Acciones */
+/* Se alinean a la derecha; su orden visual lo define order: accesibilidad, idioma, ingresar y crear cuenta. */
 .navbar-acciones {
   display: flex;
   align-items: center;
@@ -99,13 +114,14 @@
   margin-left: auto;
 }
 
-/* El acceso a accesibilidad también se muestra en la navegación de escritorio. */
+/* [STATIC] Mantiene visible el acceso al panel de accesibilidad en escritorio. */
 .navbar-acciones > .navbar-accesibilidad {
   display: inline-flex;
   flex: 0 0 auto;
   order: 0;
 }
 
+/* Refuerza que el botón de accesibilidad no quede oculto ni transparente. */
 .navbar-acciones .navbar-accesibilidad-abrir {
   display: inline-flex;
   flex: 0 0 auto;
@@ -113,6 +129,7 @@
   opacity: 1;
 }
 
+/* Idioma */
 .navbar-idioma {
   display: flex;
   order: 1;
@@ -120,6 +137,7 @@
   gap: var(--espacio-2);
 }
 
+/* El título del selector de idioma solo se muestra en el menú móvil. */
 .navbar-idioma-titulo {
   display: none;
 }
@@ -150,11 +168,13 @@
   color: var(--texto-principal);
 }
 
+/* Resalta el idioma seleccionado con el color de marca. */
 .navbar-idioma-opciones button.is-activo {
   color: var(--texto-sobre-marca);
   background: var(--marca-primario);
 }
 
+/* Ingreso y registro */
 .navbar-ingresar-escritorio,
 .navbar-ingresar-menu {
   display: inline-flex;
@@ -168,6 +188,7 @@
   white-space: nowrap;
 }
 
+/* En escritorio el contenedor no genera caja propia, así sus hijos se alinean como parte de .navbar-acciones. */
 .navbar-botones-movil {
   display: contents;
 }
@@ -181,6 +202,7 @@
   color: var(--texto-principal);
 }
 
+/* El enlace de ingreso del menú móvil se oculta en escritorio, donde se usa el de escritorio. */
 .navbar-ingresar-menu {
   display: none;
 }
@@ -209,18 +231,22 @@
   background: var(--marca-primario-presionado);
 }
 
+/* Estados */
+/* Zona de mensajes bajo la barra, alineada con el ancho del contenido. */
 .navbar-feedback {
   width: calc(100% - 2rem);
   max-width: var(--ancho-contenido);
   margin: 0 auto var(--espacio-3);
 }
 
+/* Marcador de texto mientras la navegación carga. */
 .navbar-esqueleto {
   display: block;
   color: var(--texto-secundario);
   font-size: 0.875rem;
 }
 
+/* Mensaje de error con un botón de acción al lado. */
 .navbar-estado {
   display: flex;
   align-items: center;
@@ -243,6 +269,8 @@
   background: var(--fondo-superficie);
 }
 
+/* Tablet */
+/* Reduce los espacios entre bloques para que la fila siga cabiendo. */
 @media (max-width: 900px) {
   .navbar-interior {
     gap: var(--espacio-4);
@@ -258,6 +286,8 @@
   }
 }
 
+/* Móvil */
+/* La primera fila lleva logo, ingreso rápido y hamburguesa; el panel pasa a una fila propia o a pantalla completa. */
 @media (max-width: 640px) {
   .navbar-interior {
     min-height: 68px;
@@ -286,6 +316,7 @@
     font-weight: 600;
   }
 
+  /* Con el menú abierto se oculta el ingreso rápido porque el menú trae su propio enlace de ingreso. */
   .navbar.menu-abierto .navbar-ingresar-rapido {
     display: none;
   }
@@ -308,11 +339,13 @@
     background: var(--fondo-superficie);
   }
 
+  /* Muestra el botón atenuado y con cursor de espera mientras está deshabilitado. */
   .navbar-icono-hamburguesa:disabled {
     opacity: 0.5;
     cursor: wait;
   }
 
+  /* El panel permanece oculto mientras el menú está cerrado. */
   .navbar-panel,
   .navbar-panel.is-abierto {
     display: none;
@@ -322,6 +355,8 @@
     gap: var(--espacio-3);
   }
 
+  /* Abierto, cubre toda la pantalla; el padding superior de 76px deja libre la zona de la barra.
+     100dvh corrige la altura en navegadores móviles con barra dinámica; 100vh queda como respaldo. */
   .navbar-panel.is-abierto {
     position: fixed;
     inset: 0;
@@ -335,6 +370,7 @@
     overflow-y: auto;
   }
 
+  /* Los enlaces pasan a una columna sin separación. */
   .navbar-enlaces {
     align-items: stretch;
     flex-direction: column;
@@ -347,6 +383,7 @@
     padding-inline: var(--espacio-2);
   }
 
+  /* El margen superior automático empuja las acciones al final del panel. */
   .navbar-acciones {
     width: 100%;
     align-items: stretch;
@@ -355,6 +392,7 @@
     margin: auto 0 0;
   }
 
+  /* Agrupa los botones de ingreso y registro en una tarjeta, al final de las acciones. */
   .navbar-botones-movil {
     display: grid;
     order: 3;
@@ -365,6 +403,7 @@
     background: var(--fondo-superficie);
   }
 
+  /* Muestra el título del idioma a la izquierda y las opciones a la derecha. */
   .navbar-idioma {
     width: 100%;
     order: 1;
@@ -381,6 +420,7 @@
     font-weight: 600;
   }
 
+  /* Se oculta el ingreso de escritorio; en móvil se usa el del menú. */
   .navbar-ingresar-escritorio {
     display: none;
   }
@@ -407,6 +447,7 @@
     margin-top: 0;
   }
 
+  /* El acceso a accesibilidad queda después del idioma y antes de los botones de cuenta. */
   .navbar-acciones > .navbar-accesibilidad {
     order: 2;
   }

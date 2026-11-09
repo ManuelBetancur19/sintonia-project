@@ -1,3 +1,8 @@
+/* RESPONSABILIDAD: Estiliza el pie global y sus columnas de navegación. */
+
+/* Contenedor */
+/* margin-top: auto empuja el pie al final de la página cuando el contenido es corto
+   (requiere que el contenedor padre sea una columna flex o grid). */
 .pie {
   width: 100%;
   margin-top: auto;
@@ -6,12 +11,15 @@
   background: var(--fondo-superficie);
 }
 
+/* Centra el contenido con un margen lateral y un ancho máximo un poco mayor que el del contenido principal. */
 .pie-interior {
   width: calc(100% - 2 * var(--espacio-12));
   max-width: calc(var(--ancho-contenido) + var(--espacio-16) + var(--espacio-4));
   margin-inline: auto;
 }
 
+/* Zona superior */
+/* La marca ocupa el espacio sobrante y las tres columnas de enlaces se ajustan a su contenido. */
 .pie-superior {
   display: grid;
   grid-template-columns: minmax(0, 1fr) repeat(3, max-content);
@@ -20,10 +28,12 @@
   padding-bottom: var(--espacio-8);
 }
 
+/* Marca */
 .pie-marca {
   max-width: 340px;
 }
 
+/* El alto mínimo da al logo un área de clic cómoda. */
 .pie-logo {
   display: inline-flex;
   align-items: center;
@@ -45,6 +55,7 @@
   line-height: 1.25rem;
 }
 
+/* Columnas de navegación */
 .pie-columna h2 {
   margin: 0 0 var(--espacio-3);
   color: var(--texto-secundario);
@@ -64,6 +75,7 @@
   list-style: none;
 }
 
+/* Los elementos sin enlace (span) comparten el estilo y el alto de los enlaces para que las filas queden alineadas. */
 .pie-columna a,
 .pie-columna li > span {
   display: inline-flex;
@@ -80,11 +92,14 @@
   color: var(--marca-primario);
 }
 
+/* Foco */
+/* [ACCESIBILIDAD] Resalta los enlaces del pie al recorrerlos con teclado. */
 .pie :focus-visible {
   outline: 3px solid var(--marca-primario);
   outline-offset: 3px;
 }
 
+/* Zona inferior */
 .pie-inferior {
   display: flex;
   align-items: center;
@@ -102,6 +117,8 @@
   line-height: 1rem;
 }
 
+/* Tablet */
+/* La marca pasa a una fila propia y las tres columnas se reparten el ancho por igual debajo. */
 @media (max-width: 800px) {
   .pie-superior {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -114,6 +131,8 @@
   }
 }
 
+/* Móvil */
+/* Compacta el pie: columnas al ancho de su contenido, logo y tipografía más pequeños, y la franja inferior apilada. */
 @media (max-width: 560px) {
   .pie {
     padding-block: var(--espacio-8) var(--espacio-4);
@@ -172,4 +191,3 @@
     line-height: 0.875rem;
   }
 }
-

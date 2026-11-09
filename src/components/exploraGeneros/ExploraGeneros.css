@@ -1,3 +1,6 @@
+/* RESPONSABILIDAD: Estiliza la cuadrícula de exploración de géneros. */
+
+/* Contenedor y cabecera */
 .explora-generos {
   padding-block: var(--espacio-8) var(--espacio-12);
 }
@@ -19,6 +22,8 @@
   line-height: 1.625rem;
 }
 
+/* Enlace al catálogo */
+/* white-space: nowrap evita que el enlace se parta en dos líneas junto al título. */
 .explora-generos-catalogo {
   display: inline-flex;
   align-items: center;
@@ -36,12 +41,16 @@
   color: var(--marca-primario-hover);
 }
 
+/* Foco */
+/* [ACCESIBILIDAD] Hace visible el foco de teclado en el enlace y las tarjetas. */
 .explora-generos-catalogo:focus-visible,
 .genero-tarjeta:focus-visible {
   outline: 3px solid var(--marca-primario);
   outline-offset: 3px;
 }
 
+/* Lista de géneros */
+/* Cuatro columnas iguales en escritorio; en pantallas menores se reduce el número. */
 .explora-generos-lista {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -51,6 +60,7 @@
   list-style: none;
 }
 
+/* Estados de carga y error */
 .explora-generos-estado {
   display: flex;
   align-items: center;
@@ -66,6 +76,7 @@
   line-height: 1.25rem;
 }
 
+/* En el error, el mensaje queda a un lado y el botón de reintento al otro. */
 .explora-generos-error {
   justify-content: space-between;
 }
@@ -97,6 +108,8 @@
   background: var(--fondo-elevada);
 }
 
+/* Indicador de carga */
+/* Círculo con un solo borde de color que, al girar, forma el indicador. */
 .explora-generos-indicador {
   width: 18px;
   height: 18px;
@@ -110,12 +123,16 @@
   to { transform: rotate(360deg); }
 }
 
+/* Tablet */
+/* Reduce la lista a tres columnas. */
 @media (max-width: 1000px) {
   .explora-generos-lista {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
+/* Móvil */
+/* Reduce espacios, pasa la lista a dos columnas y limita la vista a los primeros cuatro géneros. */
 @media (max-width: 560px) {
   .explora-generos {
     padding-block: var(--espacio-4) var(--espacio-8);
@@ -126,6 +143,7 @@
     gap: var(--espacio-3);
   }
 
+  /* Oculta del quinto género en adelante; display: none también los quita de lectores de pantalla y del tabulador. */
   .explora-generos-lista > li:nth-child(n + 5) {
     display: none;
   }
@@ -136,6 +154,8 @@
   }
 }
 
+/* Movimiento reducido */
+/* [ACCESIBILIDAD] Desactiva el movimiento de las tarjetas si el usuario lo reduce. */
 @media (prefers-reduced-motion: reduce) {
   .explora-generos-indicador {
     animation: none;
