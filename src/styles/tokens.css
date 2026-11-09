@@ -203,3 +203,26 @@
   line-height: 2.25rem;
   letter-spacing: -0.010em;
 }
+
+/* Paleta de alto contraste: conserva el tema oscuro con texto y bordes más claros. */
+[data-alto-contraste="true"] {
+  --fondo-base: #000000;
+  --fondo-superficie: #050505;
+  --fondo-elevada: #141414;
+  --fondo-sutil: #242424;
+  --fondo-inverso: #ffffff;
+  --marca-primario: #c6f24e;
+  --marca-primario-hover: #d6f97a;
+  --marca-primario-presionado: #aeda36;
+  --marca-suave: #29330e;
+  --marca-secundario: #b8aaff;
+  --marca-secundario-suave: #251f45;
+  --texto-principal: #ffffff;
+  --texto-secundario: #f0eff4;
+  --texto-terciario: #d6d4df;
+  --texto-marca: #d6ff64;
+  --texto-sobre-marca: #000000;
+  --texto-inverso: #000000;
+  --borde-sutil: #777481;
+  --borde-fuerte: #c5c3cf;
+}

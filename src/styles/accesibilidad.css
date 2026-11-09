@@ -1,0 +1,19 @@
+html[data-reducir-movimiento="true"],
+html[data-reducir-movimiento="true"] *,
+html[data-reducir-movimiento="true"] *::before,
+html[data-reducir-movimiento="true"] *::after {
+  scroll-behavior: auto !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+html[data-subrayar-enlaces="true"] a:not(.navbar-crear-cuenta):not(.navbar-ingresar-rapido):not(.navbar-ingresar-menu):not(.hero-boton):not(.inicio-cta-enlace) {
+  text-decoration: underline !important;
+  text-underline-offset: 0.15em;
+}
+
+html[data-espaciado-lectura="true"] :where(body *) {
+  line-height: 1.5 !important;
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.16em !important;
+}

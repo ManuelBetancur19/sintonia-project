@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { API_URL } from "../config.js";
-import { obtenerGeneros } from "../services/generos.js";
+import { obtenerAlbumesPopulares } from "../services/albumes.js";
+
+const LIMITE = 6;
 
 function textosValidos(textos) {
   const destacados = textos?.paginas?.inicioPublico?.destacados;
@@ -27,7 +28,6 @@ function textosValidos(textos) {
 export function useDestacados({ textos }) {
   const textosSeccion = textosValidos(textos);
   const [albumes, setAlbumes] = useState([]);
-  const [totalGeneros, setTotalGeneros] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [intento, setIntento] = useState(0);
@@ -40,42 +40,25 @@ export function useDestacados({ textos }) {
     setCargando(true);
     setError(null);
     setAlbumes([]);
-    setTotalGeneros(null);
 
     async function cargarAlbumes() {
       try {
-        const { datos: generos = [] } = await obtenerGeneros();
-        if (vigente) setTotalGeneros(generos.length);
-
-        const primerosGeneros = generos.slice(0, 6);
-        const detalles = await Promise.all(
-          primerosGeneros.map(async (genero) => {
-            const respuestaGenero = await fetch(
-              `${API_URL}/generos/${encodeURIComponent(genero.id)}`,
-              { signal: controlador.signal },
-            );
-            if (!respuestaGenero.ok) {
-              throw new Error(`HTTP ${respuestaGenero.status}`);
-            }
-            const respuestaDetalle = await respuestaGenero.json();
-            return {
-              idGenero: genero.id,
-              ...(respuestaDetalle.datos ?? respuestaDetalle),
-            };
-          }),
-        );
+        const respuesta = await obtenerAlbumesPopulares(LIMITE, {
+          signal: controlador.signal,
+        });
 
         const idsIncluidos = new Set();
         const seleccionados = [];
-        for (const detalle of detalles) {
-          const album = detalle.albumes?.[0];
+        const albumesApi = Array.isArray(respuesta?.datos) ? respuesta.datos : [];
+        for (const album of albumesApi) {
           if (!album?.id || idsIncluidos.has(album.id)) continue;
           idsIncluidos.add(album.id);
-          seleccionados.push({ ...album, idGenero: detalle.idGenero });
+          seleccionados.push(album);
+          if (seleccionados.length === LIMITE) break;
         }
         if (vigente) setAlbumes(seleccionados);
       } catch (errorCarga) {
-        if (vigente) {
+        if (vigente && errorCarga?.name !== "AbortError") {
           console.error("Error al cargar los álbumes destacados:", errorCarga);
           setError(errorCarga instanceof TypeError ? "sinConexion" : "error");
         }
@@ -94,7 +77,6 @@ export function useDestacados({ textos }) {
   return {
     textos: textosSeccion,
     albumes,
-    totalGeneros,
     cargando,
     error,
     recargar,

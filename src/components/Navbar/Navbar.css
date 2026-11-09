@@ -95,6 +95,20 @@
   margin-left: auto;
 }
 
+/* El acceso a accesibilidad también se muestra en la navegación de escritorio. */
+.navbar-acciones > .navbar-accesibilidad {
+  display: inline-flex;
+  flex: 0 0 auto;
+  order: 0;
+}
+
+.navbar-acciones .navbar-accesibilidad-abrir {
+  display: inline-flex;
+  flex: 0 0 auto;
+  visibility: visible;
+  opacity: 1;
+}
+
 .navbar-idioma {
   display: flex;
   order: 1;
@@ -148,6 +162,10 @@
   line-height: 1.25rem;
   font-weight: 600;
   white-space: nowrap;
+}
+
+.navbar-botones-movil {
+  display: contents;
 }
 
 .navbar-ingresar-escritorio {
@@ -305,7 +323,7 @@
     inset: 0;
     z-index: 20;
     display: flex;
-    width: 100vw;
+    width: auto;
     height: 100vh;
     height: 100dvh;
     padding: 76px var(--espacio-4) var(--espacio-4);
@@ -333,8 +351,19 @@
     margin: auto 0 0;
   }
 
+  .navbar-botones-movil {
+    display: grid;
+    order: 3;
+    gap: var(--espacio-2);
+    width: 100%;
+    padding: var(--espacio-3);
+    border-radius: var(--radio-md);
+    background: var(--fondo-superficie);
+  }
+
   .navbar-idioma {
     width: 100%;
+    order: 1;
     justify-content: space-between;
     min-height: 44px;
     padding-inline: var(--espacio-2);
@@ -360,11 +389,11 @@
   }
 
   .navbar-crear-cuenta {
-    order: 3;
+    order: 0;
   }
 
   .navbar-ingresar-menu {
-    order: 4;
+    order: 0;
     min-height: 44px;
     border: 1px solid var(--borde-fuerte);
     border-radius: var(--radio-completo);
@@ -372,5 +401,9 @@
 
   .navbar-feedback {
     margin-top: 0;
+  }
+
+  .navbar-acciones > .navbar-accesibilidad {
+    order: 2;
   }
 }

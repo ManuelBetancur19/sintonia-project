@@ -14,6 +14,8 @@ function validarTextos(datos) {
   const pagina = textos?.paginas?.inicioPublico;
   const hero = pagina?.hero;
   const cifras = pagina?.cifras;
+  const accesibilidad = textos?.accesibilidad;
+  const avisoCookies = textos?.cookies?.banner;
 
   const textosObligatorios = [
     hero?.etiquetas?.temporada,
@@ -24,6 +26,29 @@ function validarTextos(datos) {
     cifras?.canciones?.etiqueta,
     cifras?.generos?.etiqueta,
     cifras?.cortes?.etiqueta,
+    accesibilidad?.titulo,
+    accesibilidad?.tamanoTexto?.etiqueta,
+    accesibilidad?.tamanoTexto?.reducir,
+    accesibilidad?.tamanoTexto?.aumentar,
+    accesibilidad?.tamanoTexto?.valor,
+    accesibilidad?.altoContraste?.etiqueta,
+    accesibilidad?.altoContraste?.ayuda,
+    accesibilidad?.reducirMovimiento?.etiqueta,
+    accesibilidad?.reducirMovimiento?.ayuda,
+    accesibilidad?.subrayarEnlaces?.etiqueta,
+    accesibilidad?.subrayarEnlaces?.ayuda,
+    accesibilidad?.espaciado?.etiqueta,
+    accesibilidad?.espaciado?.ayuda,
+    accesibilidad?.enlaces?.declaracion,
+    accesibilidad?.botones?.restablecer,
+    accesibilidad?.mensajes?.nota,
+    accesibilidad?.aria?.cerrar,
+    textos?.navbar?.aria?.accesibilidad,
+    textos?.menuMovil?.secciones?.accesibilidad,
+    avisoCookies?.titulo,
+    avisoCookies?.texto,
+    avisoCookies?.botones?.rechazar,
+    avisoCookies?.botones?.aceptar,
   ];
 
   if (
@@ -52,6 +77,7 @@ function validarTextos(datos) {
       navbar: textos?.navbar,
       menuMovil: textos?.menuMovil,
       idioma: textos?.idioma ? { codigos: textos.idioma.codigos } : undefined,
+      accesibilidad,
     },
     hero: pagina,
     completo: textos,

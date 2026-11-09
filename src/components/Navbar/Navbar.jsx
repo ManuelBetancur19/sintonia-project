@@ -1,5 +1,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import Icono from "../Icono/Icono.jsx";
+import PanelAccesibilidad from "./PanelAccesibilidad.jsx";
+import { useAccesibilidad } from "../../hooks/useAccesibilidad.js";
 import logo from "../../assets/logo/logo.svg";
 import "./Navbar.css";
 
@@ -22,6 +24,7 @@ export default function Navbar({
   const [abierto, setAbierto] = useState(false);
   const botonMenu = useRef(null);
   const idPanel = useId();
+  const estadoAccesibilidad = useAccesibilidad();
 
   const nav = textos?.navbar;
   const menu = textos?.menuMovil;
@@ -139,22 +142,31 @@ export default function Navbar({
                   </div>
                 </div>
 
-                <a
-                  className="navbar-crear-cuenta"
-                  href={RUTAS.crearCuenta}
-                  onClick={cerrarMenu}
-                >
-                  {menu?.botones?.invitado?.crearCuenta ??
-                    nav.botones?.invitado?.crearCuenta}
-                </a>
+                <PanelAccesibilidad
+                  textos={textos?.accesibilidad}
+                  ariaBoton={nav.aria?.accesibilidad}
+                  etiquetaMovil={menu?.secciones?.accesibilidad}
+                  estado={estadoAccesibilidad}
+                />
 
-                <a
-                  className="navbar-ingresar-menu"
-                  href={RUTAS.ingresar}
-                  onClick={cerrarMenu}
-                >
-                  {menu?.botones?.invitado?.ingresar}
-                </a>
+                <div className="navbar-botones-movil">
+                  <a
+                    className="navbar-crear-cuenta"
+                    href={RUTAS.crearCuenta}
+                    onClick={cerrarMenu}
+                  >
+                    {menu?.botones?.invitado?.crearCuenta ??
+                      nav.botones?.invitado?.crearCuenta}
+                  </a>
+
+                  <a
+                    className="navbar-ingresar-menu"
+                    href={RUTAS.ingresar}
+                    onClick={cerrarMenu}
+                  >
+                    {menu?.botones?.invitado?.ingresar}
+                  </a>
+                </div>
                 <a
                   className="navbar-ingresar-escritorio"
                   href={RUTAS.ingresar}

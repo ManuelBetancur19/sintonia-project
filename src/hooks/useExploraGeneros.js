@@ -28,6 +28,7 @@ function textosValidos(textos) {
 export function useExploraGeneros({ textos }) {
   const textosSeccion = textosValidos(textos);
   const [generos, setGeneros] = useState([]);
+  const [totalGeneros, setTotalGeneros] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [intento, setIntento] = useState(0);
@@ -38,12 +39,16 @@ export function useExploraGeneros({ textos }) {
     setCargando(true);
     setError(null);
     setGeneros([]);
+    setTotalGeneros(null);
 
     async function cargarGeneros() {
       try {
         const respuesta = await obtenerGeneros();
         const lista = Array.isArray(respuesta?.datos) ? respuesta.datos : [];
-        if (vigente) setGeneros(lista.slice(0, LIMITE_GENEROS));
+        if (vigente) {
+          setTotalGeneros(lista.length);
+          setGeneros(lista.slice(0, LIMITE_GENEROS));
+        }
       } catch (errorCarga) {
         if (vigente) {
           console.error("Error al cargar los géneros para explorar:", errorCarga);
@@ -63,6 +68,7 @@ export function useExploraGeneros({ textos }) {
   return {
     textos: textosSeccion,
     generos,
+    totalGeneros,
     cargando,
     error,
     recargar,

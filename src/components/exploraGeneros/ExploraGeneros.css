@@ -159,6 +159,10 @@
     gap: var(--espacio-3);
   }
 
+  .explora-generos-lista > li:nth-child(n + 5) {
+    display: none;
+  }
+
   .explora-generos-cabecera h2 {
     font-size: 1.125rem;
     line-height: 1.5rem;

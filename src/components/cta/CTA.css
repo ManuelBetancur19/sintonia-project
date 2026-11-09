@@ -70,11 +70,24 @@
     gap: var(--espacio-6);
     margin-block: var(--espacio-4) var(--espacio-8);
     padding: var(--espacio-6) var(--espacio-4);
+    color: var(--texto-principal);
+    background: var(--fondo-superficie);
   }
 
   .inicio-cta-enlace {
     width: 100%;
     min-height: 52px;
+    color: var(--texto-sobre-marca);
+    background: var(--marca-primario);
+  }
+
+  .inicio-cta-enlace:hover {
+    color: var(--texto-sobre-marca);
+    background: var(--marca-primario-hover);
+  }
+
+  .inicio-cta-enlace:focus-visible {
+    outline-color: var(--marca-primario);
   }
 
   .inicio-cta h2 {

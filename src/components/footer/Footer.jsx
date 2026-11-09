@@ -2,48 +2,7 @@ import { useId } from "react";
 import logo from "../../assets/logo/logo.svg";
 import "./Footer.css";
 
-export type FooterTextos = {
-  lema: string;
-  columnas: {
-    explora: {
-      titulo: string;
-      enlaces: {
-        inicio: string;
-        catalogo: string;
-      };
-    };
-    cuenta: {
-      titulo: string;
-      enlaces: {
-        ingresar: string;
-        crearCuenta: string;
-      };
-    };
-    legal: {
-      titulo: string;
-      enlaces: {
-        terminos: string;
-        accesibilidad: string;
-      };
-    };
-  };
-  legal: {
-    derechos: string;
-    nota: string;
-  };
-};
-
-type FooterProps = {
-  textos:
-    | {
-        sitio?: { nombre?: string };
-        footer?: FooterTextos;
-      }
-    | null
-    | undefined;
-};
-
-export default function Footer({ textos }: FooterProps) {
+export default function Footer({ textos }) {
   const footer = textos?.footer;
   const nombreSitio = textos?.sitio?.nombre;
   const idExplora = useId();
