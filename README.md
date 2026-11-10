@@ -16,6 +16,8 @@ El proyecto está desplegado en Vercel. Vercel genera y publica la versión de p
 
 Para que la versión publicada pueda consultar la API, configura `VITE_API_URL` en **Project Settings → Environment Variables** del proyecto de Vercel y vuelve a desplegar después de cambiarla. Las variables con prefijo `VITE_` se incluyen en el código del navegador, así que no deben contener secretos.
 
+El archivo [vercel.json](vercel.json) redirige internamente las solicitudes de rutas de la SPA a `index.html`. Esto permite abrir o recargar directamente rutas como `/catalogo?genero=gen_rock`; React Router conserva la URL y muestra la vista correspondiente.
+
 ## Tecnologías
 
 - React y React DOM

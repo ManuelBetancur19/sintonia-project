@@ -38,7 +38,7 @@
   margin: var(--espacio-4) 0 var(--espacio-3);
   color: var(--texto-principal);
   font-family: var(--fuente-syne);
-  font-size: clamp(3.75rem, 7.3vw, 7.5rem);
+  font-size: 7.5rem;
   font-weight: 800;
   line-height: 0.9;
   letter-spacing: -0.035em;

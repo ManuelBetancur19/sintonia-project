@@ -11,6 +11,18 @@
   background: var(--fondo-superficie);
 }
 
+/* En escritorio, conserva 80px de margen exterior hasta el ancho máximo del panel. */
+@media (min-width: 1000px) {
+  .catalogo-panel {
+    --ancho-panel-catalogo: min(
+      calc(100vw - var(--espacio-16) - var(--espacio-16) - var(--espacio-4) - var(--espacio-4)),
+      calc(var(--ancho-contenido) + var(--espacio-8) + var(--espacio-8))
+    );
+    width: var(--ancho-panel-catalogo);
+    margin-inline: calc((100% - var(--ancho-panel-catalogo)) / 2);
+  }
+}
+
 .catalogo-encabezado {
   max-width: 52rem;
   margin-bottom: var(--espacio-8);
@@ -303,6 +315,8 @@
   }
 
   .catalogo-panel {
+    width: calc(100% + var(--espacio-4) + var(--espacio-4));
+    margin-inline: calc(0px - var(--espacio-4));
     padding: var(--espacio-4);
     border-radius: var(--radio-lg);
   }

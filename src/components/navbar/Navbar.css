@@ -290,7 +290,7 @@
 /* La primera fila lleva logo, ingreso rápido y hamburguesa; el panel pasa a una fila propia o a pantalla completa. */
 @media (max-width: 640px) {
   .navbar-interior {
-    min-height: 68px;
+    min-height: 60px;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 0;
