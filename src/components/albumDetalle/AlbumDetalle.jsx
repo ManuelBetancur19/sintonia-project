@@ -136,6 +136,13 @@ export default function AlbumDetalle({ textos, idioma }) {
         />
       ) : (
         <div className="album-detalle-panel">
+          <Link
+            className="album-detalle-volver"
+            to={RUTAS.catalogo}
+            aria-label={textosAlbum.noEncontrado.botones.volver}
+          >
+            <span aria-hidden="true">←</span>
+          </Link>
           <header className="album-detalle-cabecera">
             <div className="album-detalle-portada" aria-hidden="true">
               <PortadaAlbum portada={album.portada} />
@@ -153,6 +160,21 @@ export default function AlbumDetalle({ textos, idioma }) {
           </header>
 
           <section className="album-detalle-seccion">
+            {pistas.length ? (
+              <ul className="album-detalle-pistas-movil" aria-label={album.titulo}>
+                {pistas.map((pista) => (
+                  <li className="album-detalle-pista-movil" key={pista.id}>
+                    <span className="album-detalle-pista-portada" aria-hidden="true">
+                      <PortadaAlbum portada={pista.portada} />
+                    </span>
+                    <span className="album-detalle-pista-texto">
+                      <span>{pista.titulo}</span>
+                      {pista.artista?.nombre ? <span>{pista.artista.nombre}</span> : null}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : <p className="album-detalle-vacio">{estados.vacio.generico}</p>}
             {pistas.length ? (
               <div className="album-detalle-tabla-contenedor">
                 <table className="album-detalle-tabla">
@@ -195,7 +217,7 @@ export default function AlbumDetalle({ textos, idioma }) {
                   </tbody>
                 </table>
               </div>
-            ) : <p className="album-detalle-vacio">{estados.vacio.generico}</p>}
+            ) : null}
             {formatearFecha(album.fechaPublicacion, idioma) ? (
               <p className="album-detalle-fecha">
                 <time dateTime={album.fechaPublicacion}>{formatearFecha(album.fechaPublicacion, idioma)}</time>
@@ -204,7 +226,7 @@ export default function AlbumDetalle({ textos, idioma }) {
           </section>
 
           {albumesArtista.length ? (
-            <section className="album-detalle-seccion" aria-labelledby="album-detalle-mas-artista">
+            <section className="album-detalle-seccion album-detalle-seccion--relacionados" aria-labelledby="album-detalle-mas-artista">
               <header className="album-detalle-relacionados-cabecera">
                 <h2 id="album-detalle-mas-artista">
                 {textosAlbum.masDelArtista.titulo.replace("{artista}", album.artista?.nombre ?? "")}

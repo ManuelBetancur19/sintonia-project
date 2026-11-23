@@ -135,7 +135,7 @@ function App() {
 
   return (
     // Estructura general: aviso de cookies, navegación, contenido principal por rutas y pie de página.
-    <div className="sitio">
+    <div className={`sitio${location.pathname.startsWith("/albumes/") ? " sitio--album-detalle" : ""}`}>
       {/* Aviso de consentimiento: recibe la referencia para medir su altura y las acciones de decisión. */}
       <AvisoCookies
         referencia={avisoCookiesRef}
