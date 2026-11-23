@@ -10,6 +10,7 @@ import ExploraGeneros from "./components/exploraGeneros/ExploraGeneros.jsx";
 import CTA from "./components/cta/CTA.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import Catalogo from "./components/catalogo/Catalogo.jsx";
+import AlbumDetalle from "./components/albumDetalle/AlbumDetalle.jsx";
 import { useHero } from "./hooks/useHero.js";
 import { useDestacados } from "./hooks/useDestacados.js";
 import { useExploraGeneros } from "./hooks/useExploraGeneros.js";
@@ -200,6 +201,15 @@ function App() {
                 generoSeleccionado={generoSeleccionado}
               />
             }
+          />
+          <Route
+            path={RUTAS.albumDetalle}
+            element={(
+              <AlbumDetalle
+                textos={textosCompletos}
+                idioma={idioma}
+              />
+            )}
           />
           {/* Cualquier otra ruta muestra la página no encontrada. */}
           <Route

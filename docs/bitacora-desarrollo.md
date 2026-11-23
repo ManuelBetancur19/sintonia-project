@@ -1,0 +1,47 @@
+# Bitácora de desarrollo
+
+## PROMPT 001 — Implementación de Vista 3
+
+- **Fecha de ejecución:** 2026-11-23.
+- **Objetivo:** implementar `/albumes/:id` para consultar un álbum, presentar pistas y enlazar otros álbumes del artista con los datos de la API.
+- **Archivos creados:**
+  - `src/hooks/useAlbumDetalle.js`: carga por ID, reintentos, clasificación de errores, cancelación de peticiones obsoletas.
+  - `src/components/albumDetalle/AlbumDetalle.jsx`: estados, información del álbum, pistas, metadatos y álbumes relacionados.
+  - `src/components/albumDetalle/AlbumDetalle.css`: presentación adaptable usando los tokens existentes.
+- **Archivos modificados:**
+  - `src/services/albumes.js`: agrega la consulta de detalle por ID y admite `AbortSignal`.
+  - `src/rutas.js`: declara `/albumes/:id`.
+  - `src/App.jsx`: registra la vista y le entrega los textos de idioma actual.
+- **Cambios:** se añadió la consulta `GET /albumes/:id`, codificando el ID de cadena. El servicio admite la respuesta con `{ datos }` o el objeto directo, siguiendo el precedente de `normalizarGeneroDetalle`. La vista reconoce 404 como no encontrado, separa errores de conexión de otros errores y ofrece reintento con los textos comunes existentes.
+- **Endpoints previstos:** `GET /albumes/:id`; `GET /textos?idioma=es|en` ya es consultado por la aplicación.
+- **Datos obtenidos de la API en esta ejecución:** ninguno. Las solicitudes a `/docs`, al detalle `alb_luz-de-paramo` y a textos en español e inglés fallaron con `Host desconocido` para `yanethm-sintonia-api.fly.dev`. No se afirma haber verificado el esquema o valores reales.
+- **Componentes reutilizados:** `PortadaAlbum` genera la portada con `album.portada`; `TarjetaAlbum` presenta y enlaza álbumes de `masDelArtista`.
+- **Decisiones técnicas:** no se agregaron dependencias; las duraciones usan minutos y segundos; la lista conserva el orden de `pistas`; no se añaden controles de audio; título y meta description se actualizan con título/artista y se restauran al salir.
+- **Pruebas realizadas:** `npx vite build` terminó correctamente (150 módulos transformados). Se intentó acceder al endpoint `/docs`, a un álbum de ejemplo y a los endpoints de textos `es` y `en`; todos fallaron por resolución DNS. No se pudo abrir un álbum desde una tarjeta, confirmar datos reales, validar un 404 real, comparar idiomas en ejecución ni comprobar visualmente escritorio/móvil.
+- **Errores encontrados:** no se detectaron errores de compilación. El entorno no resolvió el host de la API.
+- **Limitaciones:** el material recibido no incluye URL, captura ni archivo Figma; por ello el diseño se basó en los tokens y convenciones existentes y no puede afirmarse fidelidad a medidas de Figma. Tampoco se pudo confirmar el contrato de detalle o claves textuales propias de Vista 3. La implementación reutiliza `estados.cargando`, `estados.error`, `estados.sinConexion`, `estados.noEncontrado`, `estados.vacio.generico`, `paginas.catalogo.genero.albumes.titulo` y `paginas.catalogo.genero.canciones.titulo`, claves que el validador actual de `useHero` ya exige. Etiquetas específicas para tipo, fecha, género, número y duración no se añadieron porque no fue posible descubrir si la API ya ofrece sus equivalentes.
+- **Pendientes para el siguiente avance:** volver a comprobar `/docs`, confirmar forma y campos del JSON de `/albumes/:id` y estructura exacta de textos por idioma; cotejar Figma cuando se comparta; revisar etiquetas de metadatos; probar estados y navegación con API disponible en navegador de escritorio y móvil.
+
+## PROMPT 002 — Auditoría de Vista 3
+
+- **Fecha de ejecución:** 2026-11-23.
+- **Diagnóstico independiente de conectividad:** desde PowerShell, `Resolve-DnsName` fue rechazado por permisos, `nslookup` agotó el tiempo de espera al consultar el DNS local `127.0.0.1`, `Test-NetConnection` no pudo resolver el host y `Invoke-WebRequest` informó `Host desconocido`. Estos resultados son fallos de resolución/red en ese entorno, no respuestas HTTP de la API.
+- **Comprobación desde navegador:** Edge sí pudo cargar y mostrar respuestas JSON de `GET /api/v1/albumes/alb_luz-de-paramo`, `GET /api/v1/textos?idioma=es` y `GET /api/v1/textos?idioma=en`. El detalle tiene forma de objeto directo y coincide con los campos descritos para álbum, pistas y `masDelArtista`; los relacionados incluyen portada. El código usa `API_URL` desde `import.meta.env.VITE_API_URL`. La pantalla de P001 no estaba validada entonces; la llamada desde el navegador local realizada en P003 confirma que CORS permite consultar la API. No quedó evidencia suficiente en esta auditoría para afirmar el resultado de `/api/v1/docs`.
+- **Textos e internacionalización:** los JSON `es` y `en` mostraron `paginas.album` con etiquetas de encabezado, tabla, relacionados, no encontrado y SEO. Las fechas y las cantidades deben recibir el locale actual. No se agregaron campos al backend ni datos locales de catálogo.
+- **Figma:** se recibió el archivo `.fig` original y se inspeccionó la referencia de escritorio de detalle de álbum; la estructura general, cabecera, tabla y bloque de relacionados se cotejaron con la vista. No se obtuvo una referencia móvil equivalente para una comparación móvil concluyente.
+- **Cambios y archivos de la auditoría:** se revisaron `AlbumDetalle.jsx`, `AlbumDetalle.css`, `useAlbumDetalle.js`, el servicio, la ruta y `App.jsx`. Permanecieron pendientes la comprobación en navegador de la pantalla, idiomas y 404; no se registró una confirmación visual móvil.
+- **Pruebas y resultado:** `npm run build` (en ese momento `npx vite build`) compiló correctamente. Las peticiones desde PowerShell fallaron por DNS; las lecturas desde Edge sí mostraron JSON para álbum y ambos idiomas. Por ello, la validación de interfaz quedó parcial y la validación de `/docs` sin evidencia.
+- **Pendientes:** probar las rutas reales en navegador, recarga directa, error 404, consola y formatos locales; documentar los resultados reales de `/docs`; completar contraste móvil cuando exista referencia adecuada.
+
+## PROMPT 003 — Corrección de pantalla negra en Vista 3
+
+- **Fecha de ejecución:** 2026-11-23.
+- **Causa confirmada en ejecución:** antes del arreglo, la consola de Chrome mostraba `Uncaught ReferenceError: idContenido is not defined`, en `AlbumDetalle.jsx:145`, seguido por el error del componente. La vista se quedaba vacía aunque el endpoint devolvía un álbum.
+- **Correcciones aplicadas:** el título ahora usa el ID estable `album-detalle-titulo`; `App.jsx` entrega `idioma` junto a `textos` a `AlbumDetalle`. Así, `Intl.DateTimeFormat` y `Intl.NumberFormat` reciben el idioma seleccionado. `obtenerAlbumPorId` elimina las barras finales de `VITE_API_URL` antes de añadir `/albumes/:id`; se comprobó que la configuración tenía una barra final y la URL solicitada generaba `/api/v1//albumes/...`. El hook existente se conservó sin duplicar consultas ni alterar su cancelación, asociación de estado con ID/reintento, clasificación 404 y reintento.
+- **Archivos afectados en este prompt:** `src/components/albumDetalle/AlbumDetalle.jsx`, `src/App.jsx`, `src/services/albumes.js` y `docs/bitacora-desarrollo.md`. No se añadieron dependencias ni datos de catálogo ni funcionalidad de audio.
+- **Pruebas ejecutadas:** `npm run build` compiló con Vite (150 módulos). En Chrome, `/albumes/alb_luz-de-paramo` mostró “Luz de páramo”, artista Marea Baja, portada SVG derivada del objeto `portada`, cinco pistas, reproducciones de la API, duraciones `m:ss` y un álbum relacionado. `/albumes/alb_sabado-en-la-plaza` mostró “Sábado en la plaza”, Sonora del Alba, cuatro pistas, sus reproducciones, duraciones y un relacionado. Al elegir inglés, la interfaz cambió a inglés, el número se agrupó como `824,237` en vez de `824.237` y la fecha se presentó como `April 2, 2025`; la fecha española observada fue `2 de abril de 2025`. La recarga directa de la ruta de Sábado volvió a mostrar su contenido.
+- **404 y consola:** el ID de auditoría inexistente produjo una respuesta HTTP 404 y la vista “No encontramos este álbum”. Chrome registró el 404 como error de recurso esperado, no como excepción JavaScript. Tras corregir `idContenido`, las rutas de álbum válidas se observaron con cero mensajes de consola después de limpiarla (el aviso informativo de React DevTools no cuenta como error). La prueba de 404 ocurrió antes de la normalización de la barra final; luego se volvió a probar una ruta válida con la URL corregida. La herramienta del navegador dejó de reportar el proceso antes de repetir el 404 con esa URL ya normalizada.
+- **API/datos:** no se sembraron datos: título, artista, portada, pistas, reproducciones, fechas y relacionados de ambas pantallas procedieron de la API. La vista carga con el objeto directo documentado; se conserva el orden recibido.
+- **Resultado visual y limitaciones:** se comprobaron las dos rutas en escritorio y la representación de la portada. No se hizo una pasada móvil específica en este prompt. La consola vacía se comprobó tras limpiar registros previos; los avisos de red 404 solo corresponden al ID inexistente.
+- **Pendientes:** repetir la comprobación de 404 después de la corrección final de la barra en el servicio si el entorno del navegador vuelve a estar disponible; documentar `/api/v1/docs` cuando se pueda consultar; contrastar la vista móvil con una referencia móvil. No se implementó Vista 4.
+- **Estado:** corrección funcional y rutas principales verificadas; permanece pendiente la repetición final de 404 y la verificación móvil.

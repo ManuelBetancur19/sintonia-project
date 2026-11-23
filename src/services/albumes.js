@@ -19,3 +19,25 @@ export async function obtenerAlbumesPopulares(limite, { signal } = {}) {
   // Devuelve los álbumes tal como llegan de la API, sin transformarlos.
   return respuesta.json();
 }
+
+// [API] Consulta el detalle de un álbum por su identificador opaco.
+export async function obtenerAlbumPorId(id, { signal } = {}) {
+  const apiBase = API_URL.replace(/\/+$/, "");
+  const respuesta = await fetch(
+    `${apiBase}/albumes/${encodeURIComponent(id)}`,
+    {
+      headers: { Accept: "application/json" },
+      signal,
+    },
+  );
+
+  // Adjunta el estado para que el hook pueda distinguir un álbum inexistente.
+  if (!respuesta.ok) {
+    const error = new Error(`HTTP ${respuesta.status}`);
+    error.status = respuesta.status;
+    throw error;
+  }
+
+  // El contrato de GET /albumes/:id responde con el álbum directamente.
+  return respuesta.json();
+}

@@ -22,6 +22,7 @@ function validarTextos(datos) {
   const accesibilidad = textos?.accesibilidad;
   const avisoCookies = textos?.cookies?.banner;
   const catalogo = textos?.paginas?.catalogo;
+  const album = textos?.paginas?.album;
   const estados = textos?.estados;
 
   // Textos que deben llegar como cadenas no vacías, agrupados por sección.
@@ -76,6 +77,25 @@ function validarTextos(datos) {
     catalogo?.genero?.canciones?.titulo,
     catalogo?.vacio?.titulo,
     catalogo?.vacio?.texto,
+    // Vista de detalle de álbum
+    album?.seo?.titulo,
+    album?.seo?.descripcion,
+    album?.encabezado?.etiquetas?.tipo?.album,
+    album?.encabezado?.etiquetas?.tipo?.ep,
+    album?.encabezado?.etiquetas?.tipo?.sencillo,
+    album?.encabezado?.etiquetas?.resumen,
+    album?.encabezado?.canciones?.uno,
+    album?.encabezado?.canciones?.otro,
+    album?.encabezado?.duracion,
+    album?.tabla?.etiquetas?.numero,
+    album?.tabla?.etiquetas?.titulo,
+    album?.tabla?.etiquetas?.reproducciones,
+    album?.tabla?.etiquetas?.duracion,
+    album?.masDelArtista?.titulo,
+    album?.masDelArtista?.etiquetas?.anioYTipo,
+    album?.noEncontrado?.titulo,
+    album?.noEncontrado?.texto,
+    album?.noEncontrado?.botones?.volver,
     // Estados comunes
     estados?.cargando?.titulo,
     estados?.cargando?.aria,

@@ -2,6 +2,7 @@
 export const RUTAS = {
   inicio: "/",
   catalogo: "/catalogo",
+  albumDetalle: "/albumes/:id",
   ingresar: "/ingresar",
   crearCuenta: "/crear-cuenta",
 };
