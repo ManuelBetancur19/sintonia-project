@@ -17,16 +17,29 @@ export default function Navbar({
   recargar,
   idioma,
   cambiarIdioma,
+  sesion,
 }) {
   // [LOCAL] Estado del menú móvil y referencia a su botón, usada para devolverle el foco al cerrar.
   const [abierto, setAbierto] = useState(false);
+  const [cuentaAbierta, setCuentaAbierta] = useState(false);
   const botonMenu = useRef(null);
+  const botonCuenta = useRef(null);
+  const marca = useRef(null);
+  const cuentaRef = useRef(null);
 
   // Id único para enlazar el botón con el panel, ruta actual para marcar el enlace activo
   // y estado del panel de accesibilidad.
   const idPanel = useId();
+  const idMenuCuenta = useId();
   const location = useLocation();
+  const estadoOrigenIngreso = {
+    from: `${location.pathname}${location.search}${location.hash}`,
+  };
   const estadoAccesibilidad = useAccesibilidad();
+  const usuario = sesion?.iniciada ? sesion.usuario : null;
+  const autenticado = Boolean(usuario);
+  const etiquetaCuenta = idioma === "en" ? "User account" : "Cuenta de usuario";
+  const etiquetaCerrarSesion = idioma === "en" ? "Sign out" : "Cerrar sesión";
 
   // Separa las secciones de textos que se usan más abajo; el encadenado opcional evita errores mientras no han cargado.
   const nav = textos?.navbar;
@@ -69,8 +82,36 @@ export default function Navbar({
     };
   }, [abierto]);
 
+  useEffect(() => {
+    if (!cuentaAbierta) return undefined;
+
+    function cerrarAlHacerClicFuera(evento) {
+      if (!cuentaRef.current?.contains(evento.target)) setCuentaAbierta(false);
+    }
+
+    function cerrarConEscape(evento) {
+      if (evento.key !== "Escape") return;
+      setCuentaAbierta(false);
+      if (!abierto) botonCuenta.current?.focus();
+    }
+
+    document.addEventListener("pointerdown", cerrarAlHacerClicFuera);
+    document.addEventListener("keydown", cerrarConEscape);
+    return () => {
+      document.removeEventListener("pointerdown", cerrarAlHacerClicFuera);
+      document.removeEventListener("keydown", cerrarConEscape);
+    };
+  }, [cuentaAbierta, abierto]);
+
   // Cierra el menú; se usa al navegar para que el panel no quede abierto.
   const cerrarMenu = () => setAbierto(false);
+
+  function cerrarSesion() {
+    sesion?.cerrarSesion();
+    setCuentaAbierta(false);
+    cerrarMenu();
+    requestAnimationFrame(() => marca.current?.focus());
+  }
 
   return (
     // La clase menu-abierto permite al CSS elevar el logo y la hamburguesa por encima del panel.
@@ -81,6 +122,7 @@ export default function Navbar({
       <nav className="navbar-interior" aria-label={nav?.aria?.navegacion}>
         {/* [ACCESIBILIDAD] El enlace de la marca lleva el aria-label; el logo tiene alt vacío para no repetir el nombre. */}
         <Link
+          ref={marca}
           className="navbar-marca"
           to={RUTAS.inicio}
           aria-label={nav?.logo?.aria}
@@ -90,8 +132,8 @@ export default function Navbar({
         </Link>
 
         {/* Acceso rápido a ingresar en móvil; solo se renderiza cuando hay textos del menú móvil. */}
-        {menu && (
-          <Link className="navbar-ingresar-rapido" to={RUTAS.ingresar}>
+        {menu && !autenticado && (
+          <Link className="navbar-ingresar-rapido" to={RUTAS.ingresar} state={estadoOrigenIngreso}>
             {menu.botones?.invitado?.ingresar}
           </Link>
         )}
@@ -174,33 +216,76 @@ export default function Navbar({
                 />
 
                 {/* Botones de cuenta: en móvil se agrupan en una tarjeta con ingresar; en escritorio solo se ve crear cuenta. */}
-                <div className="navbar-botones-movil">
-                  {/* Prefiere el texto del menú móvil y usa el de la barra como respaldo. */}
-                  <Link
-                    className="navbar-crear-cuenta"
-                    to={RUTAS.crearCuenta}
-                    onClick={cerrarMenu}
-                  >
-                    {menu?.botones?.invitado?.crearCuenta ??
-                      nav.botones?.invitado?.crearCuenta}
-                  </Link>
+                {!autenticado ? (
+                  <div className="navbar-botones-movil">
+                    {/* Prefiere el texto del menú móvil y usa el de la barra como respaldo. */}
+                    <Link
+                      className="navbar-crear-cuenta"
+                      to={RUTAS.crearCuenta}
+                      onClick={cerrarMenu}
+                    >
+                      {menu?.botones?.invitado?.crearCuenta ??
+                        nav.botones?.invitado?.crearCuenta}
+                    </Link>
 
+                    <Link
+                      className="navbar-ingresar-menu"
+                      to={RUTAS.ingresar}
+                      state={estadoOrigenIngreso}
+                      onClick={cerrarMenu}
+                    >
+                      {menu?.botones?.invitado?.ingresar}
+                    </Link>
+                  </div>
+                ) : null}
+                {/* Ingresar de escritorio: va aparte porque el CSS lo oculta en móvil, donde se usa el del menú. */}
+                {!autenticado ? (
                   <Link
-                    className="navbar-ingresar-menu"
+                    className="navbar-ingresar-escritorio"
                     to={RUTAS.ingresar}
+                    state={estadoOrigenIngreso}
                     onClick={cerrarMenu}
                   >
-                    {menu?.botones?.invitado?.ingresar}
+                    {nav.botones?.invitado?.ingresar}
                   </Link>
-                </div>
-                {/* Ingresar de escritorio: va aparte porque el CSS lo oculta en móvil, donde se usa el del menú. */}
-                <Link
-                  className="navbar-ingresar-escritorio"
-                  to={RUTAS.ingresar}
-                  onClick={cerrarMenu}
-                >
-                  {nav.botones?.invitado?.ingresar}
-                </Link>
+                ) : null}
+                {autenticado ? (
+                  <div className="navbar-usuario" ref={cuentaRef}>
+                    <button
+                      ref={botonCuenta}
+                      className="navbar-usuario-avatar"
+                      type="button"
+                      aria-label={`${etiquetaCuenta} ${usuario.iniciales ?? ""}`.trim()}
+                      aria-expanded={cuentaAbierta}
+                      aria-controls={idMenuCuenta}
+                      onClick={() => setCuentaAbierta((estado) => !estado)}
+                    >
+                      {typeof usuario.iniciales === "string" ? usuario.iniciales : ""}
+                    </button>
+                    <div
+                      className="navbar-usuario-menu"
+                      id={idMenuCuenta}
+                      role="region"
+                      aria-label={etiquetaCuenta}
+                      hidden={!cuentaAbierta}
+                    >
+                      <div className="navbar-usuario-identidad">
+                        <span className="navbar-usuario-iniciales" aria-hidden="true">
+                          {typeof usuario.iniciales === "string" ? usuario.iniciales : ""}
+                        </span>
+                        <div className="navbar-usuario-datos">
+                          {usuario.nombre ? <strong>{usuario.nombre}</strong> : null}
+                          {usuario.correo ? <span>{usuario.correo}</span> : null}
+                        </div>
+                      </div>
+                      <div className="navbar-usuario-separador" aria-hidden="true" />
+                      <button className="navbar-usuario-salir" type="button" onClick={cerrarSesion}>
+                        <Icono nombre="salir" />
+                        <span>{etiquetaCerrarSesion}</span>
+                      </button>
+                    </div>
+                  </div>
+                ) : null}
               </div>
             </>
           )}

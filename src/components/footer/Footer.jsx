@@ -1,11 +1,15 @@
 // RESPONSABILIDAD: Presenta el pie global con marca, enlaces y avisos legales.
 import { useId } from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import logo from "../../assets/logo/logo.svg";
 import { RUTAS } from "../../rutas.js";
 import "./Footer.css";
 
-export default function Footer({ textos }) {
+export default function Footer({ textos, autenticado = false }) {
+  const location = useLocation();
+  const estadoOrigenIngreso = {
+    from: `${location.pathname}${location.search}${location.hash}`,
+  };
   const footer = textos?.footer;
   const nombreSitio = textos?.sitio?.nombre;
 
@@ -14,6 +18,7 @@ export default function Footer({ textos }) {
   const idExplora = useId();
   const idCuenta = useId();
   const idLegal = useId();
+  const ElementoCuenta = autenticado ? "div" : "nav";
 
   // No renderiza el pie hasta que estén disponibles sus textos y el nombre del sitio.
   if (!footer || !nombreSitio) return null;
@@ -52,21 +57,29 @@ export default function Footer({ textos }) {
             </ul>
           </nav>
 
-          <nav className="pie-columna" aria-labelledby={idCuenta}>
+          <ElementoCuenta className="pie-columna" aria-labelledby={idCuenta}>
             <h2 id={idCuenta}>{footer.columnas.cuenta.titulo}</h2>
             <ul>
               <li>
-                <Link to={RUTAS.ingresar}>
-                  {footer.columnas.cuenta.enlaces.ingresar}
-                </Link>
+                {autenticado ? (
+                  <span>{footer.columnas.cuenta.enlaces.ingresar}</span>
+                ) : (
+                  <Link to={RUTAS.ingresar} state={estadoOrigenIngreso}>
+                    {footer.columnas.cuenta.enlaces.ingresar}
+                  </Link>
+                )}
               </li>
               <li>
-                <Link to={RUTAS.crearCuenta}>
-                  {footer.columnas.cuenta.enlaces.crearCuenta}
-                </Link>
+                {autenticado ? (
+                  <span>{footer.columnas.cuenta.enlaces.crearCuenta}</span>
+                ) : (
+                  <Link to={RUTAS.crearCuenta}>
+                    {footer.columnas.cuenta.enlaces.crearCuenta}
+                  </Link>
+                )}
               </li>
             </ul>
-          </nav>
+          </ElementoCuenta>
 
           <nav className="pie-columna" aria-labelledby={idLegal}>
             <h2 id={idLegal}>{footer.columnas.legal.titulo}</h2>

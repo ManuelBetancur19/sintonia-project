@@ -231,6 +231,109 @@
   background: var(--marca-primario-presionado);
 }
 
+/* Avatar y menú de la sesión activa. */
+.navbar-usuario {
+  position: relative;
+  order: 4;
+  flex: 0 0 auto;
+}
+
+.navbar-usuario-avatar,
+.navbar-usuario-iniciales {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--texto-sobre-marca);
+  background: var(--marca-primario);
+  font-family: var(--fuente-inter);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.navbar-usuario-avatar {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.navbar-usuario-menu {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + var(--espacio-2));
+  right: 0;
+  width: min(23rem, calc(100vw - 2rem));
+  padding: var(--espacio-3);
+  border: 1px solid var(--borde-sutil);
+  border-radius: var(--radio-lg);
+  background: var(--fondo-elevada);
+  box-shadow: var(--sombra-tarjeta);
+}
+
+.navbar-usuario-menu[hidden] { display: none; }
+
+.navbar-usuario-identidad {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-4);
+  min-width: 0;
+  padding: var(--espacio-1) var(--espacio-2) var(--espacio-4);
+}
+
+.navbar-usuario-iniciales {
+  flex: 0 0 3.375rem;
+  width: 3.375rem;
+  height: 3.375rem;
+  font-size: 1rem;
+}
+
+.navbar-usuario-datos {
+  display: grid;
+  gap: var(--espacio-1);
+  min-width: 0;
+}
+
+.navbar-usuario-datos strong,
+.navbar-usuario-datos > span {
+  overflow-wrap: anywhere;
+}
+
+.navbar-usuario-datos strong {
+  color: var(--texto-principal);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.navbar-usuario-datos > span {
+  color: var(--texto-secundario);
+  font-size: 0.875rem;
+}
+
+.navbar-usuario-separador {
+  height: 1px;
+  margin: 0 0 var(--espacio-2);
+  background: var(--borde-sutil);
+}
+
+.navbar-usuario-salir {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  width: 100%;
+  min-height: 48px;
+  padding: var(--espacio-2);
+  border: 0;
+  border-radius: var(--radio-sm);
+  color: var(--texto-principal);
+  background: transparent;
+  text-align: left;
+}
+
+.navbar-usuario-salir:hover { background: var(--fondo-elevada); }
+.navbar-usuario-salir svg { flex: 0 0 auto; }
+
 /* Estados */
 /* Zona de mensajes bajo la barra, alineada con el ancho del contenido. */
 .navbar-feedback {
@@ -450,5 +553,9 @@
   /* El acceso a accesibilidad queda después del idioma y antes de los botones de cuenta. */
   .navbar-acciones > .navbar-accesibilidad {
     order: 2;
+  }
+
+  .navbar-usuario {
+    align-self: flex-end;
   }
 }

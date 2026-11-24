@@ -153,3 +153,49 @@
 - **Pruebas ejecutadas:** `npm run build` completó con éxito (`vite build`, 158 módulos transformados). `git diff --check` terminó sin errores de formato; mostró únicamente avisos de conversión de finales LF/CRLF. Se probaron las consultas de textos en ambos idiomas y ambas quedaron bloqueadas por DNS.
 - **Pruebas pendientes:** no se pudo probar en navegador un login exitoso, una desconexión controlada, el botón de reintento, retención de campos, 401/422/429, ni el vencimiento de 15 segundos. Tampoco se pudo confirmar consola o accesibilidad renderizada. En el navegador, un fallo de CORS también puede presentarse como una falla de `fetch` sin respuesta HTTP y no es distinguible de DNS/conectividad desde JavaScript; los errores HTTP recibidos sí se mantienen separados.
 - **Estado:** PARCIAL. El manejo de transporte, timeout, cancelación y reintento está implementado y compila; las verificaciones con API/navegador y el contenido real de textos siguen pendientes.
+
+## PROMPT 012 — Redirección después de iniciar sesión
+
+- **Fecha de ejecución:** 2026-11-24.
+- **Ruta de origen:** los enlaces de ingreso del navbar (móvil, menú y escritorio) y footer guardan `pathname + search + hash` en `location.state.from`. El enlace a recuperación preserva ese estado, y sus enlaces de regreso al ingreso también lo reenvían para no perder la página original durante el flujo.
+- **Destino seguro:** `Ingresar.jsx` acepta una ruta interna en formato string o location, la resuelve contra el origen actual y solo la usa si el origen resultante coincide con `window.location.origin`. Se rechazan rutas malformadas, externas, protocol-relative y con backslash; `/ingresar` y `/recuperar-clave` se descartan para evitar bucles. Si no hay origen válido, el destino es `/`.
+- **Redirección y sesión:** un efecto de React Router observa `sesion.iniciada` y navega con `replace: true`; así cubre tanto un inicio correcto como la restauración existente desde `sessionStorage`/`localStorage`. No se modificaron `useSesion.js`, `sesion.js` ni su estrategia de almacenamiento.
+- **Archivos modificados:** `src/components/navbar/Navbar.jsx`, `src/components/footer/Footer.jsx`, `src/components/ingresar/Ingresar.jsx`, `src/components/ingresar/RecuperarClave.jsx` y este registro. `src/App.jsx` y `src/rutas.js` se inspeccionaron y no requirieron cambios.
+- **Pruebas ejecutadas:** `npm run build` completó correctamente (158 módulos transformados). `git diff --check` no encontró errores de formato; mostró avisos únicamente sobre conversión LF/CRLF. La búsqueda de referencias confirmó el estado de origen en todos los enlaces de acceso del navbar/footer y en los enlaces que regresan de recuperación.
+- **Pruebas pendientes:** no se ejecutó navegador ni un login con API. Quedan por probar Inicio → ingreso → Inicio, Catálogo → ingreso → Catálogo, álbum → ingreso → mismo álbum, acceso directo → `/`, sesión ya existente, 401 y ausencia de bucles. La verificación requiere un navegador con la API disponible y credenciales de prueba autorizadas; no se simularon respuestas.
+- **Estado:** PARCIAL. La navegación segura está implementada y compila; los flujos de extremo a extremo siguen pendientes de navegador/API.
+
+## PROMPT 013 — Navbar con sesión iniciada
+
+- **Fecha de ejecución:** 2026-11-24.
+- **Estado compartido:** `App.jsx` crea una sola instancia de `useSesion` y pasa su estado/acciones a `Navbar` e `Ingresar`. El hook se inicializa desde `sintonia.sesion` en `localStorage` o `sessionStorage`; inicio y cierre de sesión actualizan ese estado React compartido de inmediato. Se mantiene la persistencia elegida en el formulario.
+- **Navbar autenticada:** cuando `sesion.iniciada` y `sesion.usuario` están disponibles, se ocultan los botones de ingreso/registro y aparece el avatar circular verde con el valor entregado por `usuario.iniciales`, sin derivarlo ni codificar iniciales. El avatar usa `summary` nativo dentro de `details`, es enfocable con teclado y abre una opción localizada de cierre de sesión.
+- **Cierre de sesión:** elimina `sintonia.sesion` de ambos almacenamientos, limpia el estado de usuario y errores del hook, y navega con React Router a Inicio. No se llama a ningún endpoint.
+- **Archivos modificados:** `src/App.jsx`, `src/hooks/useSesion.js`, `src/components/ingresar/Ingresar.jsx`, `src/components/navbar/Navbar.jsx`, `src/components/navbar/Navbar.css` y este registro. `src/services/sesion.js` y `src/rutas.js` no se modificaron.
+- **Pruebas ejecutadas:** `npm run build` terminó correctamente (`vite build`, 158 módulos transformados). `git diff --check` no encontró errores de formato; mostró avisos de conversión LF/CRLF. La inspección estática confirmó que `App.jsx` es el único consumidor que crea `useSesion` y comparte esa instancia con las dos vistas.
+- **Pruebas pendientes:** no se ejecutaron en navegador los estados público/autenticado, la carga de iniciales reales, la persistencia tras recargar, el cierre de sesión ni la navegación por Inicio/Catálogo/Detalle. También queda pendiente comprobar un usuario de API que incluya `iniciales`; no se hizo una petición de inicio de sesión durante esta tarea.
+- **Estado:** PARCIAL. El estado compartido, el avatar y el cierre local están implementados y compilan; la verificación en navegador con sesión real sigue pendiente.
+- **Ajuste posterior solicitado con captura:** en la página de Inicio se oculta el CTA de registro cuando hay sesión iniciada. En el footer se mantienen los rótulos “Ingresar” y “Crear cuenta”, pero se renderizan como texto sin enlace; sin sesión, se conservan los enlaces públicos originales. El resto del footer no cambia.
+
+## PROMPT 014 — Menú de usuario y cierre de sesión
+
+- **Fecha de ejecución:** 2026-11-24.
+- **Menú:** el avatar ahora es un botón con `aria-expanded` y `aria-controls`. Abre un panel superpuesto con las iniciales, `usuario.nombre` y `usuario.correo` provenientes del estado compartido. El panel se cierra al volver a pulsar el avatar, con Escape (devuelve el foco al avatar) y al hacer clic fuera. El botón y la acción se pueden recorrer con teclado; se conserva el contorno visible de foco.
+- **Diseño:** se añadió al panel el fondo oscuro, esquinas redondeadas, avatar verde de mayor tamaño, texto secundario del correo, separador e icono de salida. El ancho se limita al viewport para móvil; el popup está posicionado de forma absoluta y no altera la distribución de la Navbar.
+- **Cierre de sesión:** se reutiliza `sesion.cerrarSesion()`, que elimina únicamente la clave `sintonia.sesion` de `localStorage` y `sessionStorage`, limpia el estado compartido y deja intactas las preferencias de accesibilidad y el idioma. No se llamó a un endpoint. Las rutas actuales no tienen páginas protegidas, así que el usuario permanece en la página pública actual; el foco vuelve a la marca.
+- **Textos:** la acción requiere “Cerrar sesión” y la etiqueta accesible requiere “Cuenta de usuario”. La consulta a `GET /api/v1/textos?idioma=es` y `en` falló en DNS (`Host desconocido. (yanethm-sintonia-api.fly.dev:443)`). En los textos del navbar consumidos actualmente no existe una clave conocida para estas etiquetas, y no se inventó una propiedad de API; se usa fallback localizado ES/EN. No se puede confirmar si el backend ofrece o carece de una clave equivalente hasta que responda.
+- **Archivos modificados:** `src/components/navbar/Navbar.jsx`, `src/components/navbar/Navbar.css`, `src/components/Icono/Icono.jsx`, `src/hooks/useSesion.js` y este registro. No se modificaron endpoints ni el servicio de autenticación.
+- **Pruebas ejecutadas:** `npm run build` compiló correctamente (158 módulos transformados); `git diff --check` no encontró errores de formato. Las consultas de textos para ambos idiomas quedaron bloqueadas por resolución DNS.
+- **Pruebas pendientes:** no se comprobó el menú en navegador con una sesión real: apertura/cierre con avatar, clic fuera, Escape, datos de usuario, cierre local, persistencia después de recargar, relogin ni conservación visible de idioma/preferencias. Tampoco se pudo comprobar el popup en móvil o la consola.
+- **Estado:** PARCIAL. El menú y el cierre local están implementados y compilan; la validación visual/de interacción y la confirmación de textos API están pendientes.
+
+## PROMPT 015 — Recuperación no disponible mediante página 404
+
+- **Fecha de ejecución:** 2026-11-24.
+- **Comportamiento:** `/recuperar-clave` ahora renderiza el componente `PaginaNoEncontrada` que ya usa la ruta comodín. El enlace “¿Olvidaste tu contraseña?” de `Ingresar.jsx` ya apuntaba a `RUTAS.recuperarClave`, por lo que no se modificó. El acceso directo a la URL y la navegación desde el formulario muestran la misma vista; “Ir al inicio” usa el enlace existente a `/`.
+- **Textos y presentación:** se reutiliza `textosCompletos.estados.noEncontrado` procedente del sistema de textos, sin copiar los mensajes ni crear otro diseño. La ruta mantiene la Navbar y el footer global porque solo `/ingresar` usa la composición sin Navbar.
+- **Recuperación conservada:** `RecuperarClave.jsx`, `useRecuperacion.js` y los servicios de recuperación no se eliminaron ni modificaron; simplemente no se montan desde la ruta pública.
+- **Archivos modificados:** `src/App.jsx` y este registro. Se retiró de `App.jsx` únicamente el import de la pantalla de recuperación que ya no se monta.
+- **Pruebas ejecutadas:** `npm run build` compiló correctamente; `git diff --check` terminó sin errores de formato. La inspección de ruta confirmó que `/recuperar-clave` usa el mismo componente y el mismo objeto `estados.noEncontrado` que `*`; el link de ingreso ya navega a esa ruta.
+- **Pruebas pendientes:** no se ejecutó navegador, así que quedan pendientes la interacción desde `/ingresar`, la carga visible de textos API y el clic de “Ir al inicio”.
+- **Estado:** PARCIAL. La ruta se actualizó y compila; falta validar el flujo renderizado en navegador.

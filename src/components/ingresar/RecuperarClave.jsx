@@ -1,6 +1,6 @@
 // RESPONSABILIDAD: Presenta el flujo de solicitud de código y cambio de contraseña.
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useRecuperacion } from "../../hooks/useRecuperacion.js";
 import { RUTAS } from "../../rutas.js";
 import logo from "../../assets/logo/logo.svg";
@@ -69,6 +69,10 @@ function textoNoVacio(valor, respaldo) {
 }
 
 export default function RecuperarClave({ textos, idioma }) {
+  const location = useLocation();
+  const estadoOrigenIngreso = location.state?.from
+    ? { from: location.state.from }
+    : undefined;
   const [correo, setCorreo] = useState("");
   const [codigo, setCodigo] = useState("");
   const [clave, setClave] = useState("");
@@ -154,7 +158,13 @@ export default function RecuperarClave({ textos, idioma }) {
         {completado ? (
           <div className="ingresar-mensaje ingresar-mensaje--exito" role="status">
             <p>{etiqueta.exito}</p>
-            <Link className="ingresar-enlace-volver" to={RUTAS.ingresar}>{etiqueta.volver}</Link>
+            <Link
+              className="ingresar-enlace-volver"
+              to={RUTAS.ingresar}
+              state={estadoOrigenIngreso}
+            >
+              {etiqueta.volver}
+            </Link>
           </div>
         ) : (
           <>
@@ -268,7 +278,7 @@ export default function RecuperarClave({ textos, idioma }) {
 
         {!completado ? (
           <p className="ingresar-crear-cuenta">
-            <Link to={RUTAS.ingresar}>{etiqueta.volver}</Link>
+            <Link to={RUTAS.ingresar} state={estadoOrigenIngreso}>{etiqueta.volver}</Link>
           </p>
         ) : null}
       </div>

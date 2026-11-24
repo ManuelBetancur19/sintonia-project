@@ -121,6 +121,26 @@ export function useSesion() {
     }
   }, [error, erroresCampos]);
 
+  const cerrarSesion = useCallback(() => {
+    controlador.current?.abort();
+    try {
+      window.localStorage.removeItem(CLAVE_SESION);
+    } catch {
+      // Continúa con sessionStorage si localStorage está bloqueado.
+    }
+    try {
+      window.sessionStorage.removeItem(CLAVE_SESION);
+    } catch {
+      // La interfaz también se limpia si el navegador bloquea el almacenamiento.
+    }
+    setUsuario(null);
+    setIniciada(false);
+    setRecordarSesion(false);
+    setError(null);
+    setErroresCampos({});
+    setReintentarEn(null);
+  }, []);
+
   const iniciar = useCallback(async (correo, clave, recordar = false) => {
     if (enCurso.current || segundosBloqueo > 0) return false;
 
@@ -183,5 +203,6 @@ export function useSesion() {
     iniciar,
     limpiarError,
     limpiarErrorCampo,
+    cerrarSesion,
   };
 }

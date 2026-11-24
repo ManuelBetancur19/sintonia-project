@@ -1,7 +1,6 @@
 // RESPONSABILIDAD: Presenta la composición de dos columnas de inicio de sesión.
-import { useState } from "react";
-import { Link } from "react-router";
-import { useSesion } from "../../hooks/useSesion.js";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 import { usePortadasIngreso } from "../../hooks/usePortadasIngreso.js";
 import PortadaAlbum from "../destacados/PortadaAlbum.jsx";
 import { RUTAS } from "../../rutas.js";
@@ -71,6 +70,32 @@ function textoNoVacio(valor, respaldo) {
   return typeof valor === "string" && valor.trim() ? valor : respaldo;
 }
 
+function obtenerDestinoSeguro(origen) {
+  let ruta = origen;
+  if (origen && typeof origen === "object") {
+    ruta = `${origen.pathname ?? ""}${origen.search ?? ""}${origen.hash ?? ""}`;
+  }
+
+  if (typeof ruta !== "string" || !ruta.startsWith("/") || ruta.startsWith("//") || ruta.includes("\\")) {
+    return RUTAS.inicio;
+  }
+
+  try {
+    const destino = new URL(ruta, window.location.origin);
+    const pathnameNormalizado = destino.pathname.replace(/\/+$/, "") || "/";
+    if (
+      destino.origin !== window.location.origin
+      || pathnameNormalizado === RUTAS.ingresar
+      || pathnameNormalizado === RUTAS.recuperarClave
+    ) {
+      return RUTAS.inicio;
+    }
+    return `${destino.pathname}${destino.search}${destino.hash}`;
+  } catch {
+    return RUTAS.inicio;
+  }
+}
+
 function AvisoFormulario({ titulo, descripcion }) {
   if (!titulo) return null;
   return (
@@ -87,12 +112,14 @@ function AvisoFormulario({ titulo, descripcion }) {
   );
 }
 
-export default function Ingresar({ textos, idioma }) {
+export default function Ingresar({ textos, idioma, sesion }) {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [correo, setCorreo] = useState("");
   const [clave, setClave] = useState("");
   const [mostrarClave, setMostrarClave] = useState(false);
   const [erroresLocales, setErroresLocales] = useState({});
-  const sesion = useSesion();
+  const destino = obtenerDestinoSeguro(location.state?.from);
   const portadas = usePortadasIngreso();
   const local = TEXTO_LOCAL[idioma] ?? TEXTO_LOCAL.es;
   const pagina = textos?.paginas?.ingresar ?? textos?.paginas?.sesion ?? {};
@@ -148,6 +175,10 @@ export default function Ingresar({ textos, idioma }) {
   const derechos = typeof pieDerechos === "string"
     ? pieDerechos.replaceAll("{anio}", String(new Date().getFullYear()))
     : null;
+
+  useEffect(() => {
+    if (sesion.iniciada) navigate(destino, { replace: true });
+  }, [sesion.iniciada, navigate, destino]);
 
   async function enviarFormulario(evento) {
     evento.preventDefault();
@@ -297,7 +328,11 @@ export default function Ingresar({ textos, idioma }) {
                     />
                     <span>{etiqueta.recordar}</span>
                   </label>
-                  <Link className="ingresar-recuperar" to={RUTAS.recuperarClave}>
+                  <Link
+                    className="ingresar-recuperar"
+                    to={RUTAS.recuperarClave}
+                    state={{ from: location.state?.from }}
+                  >
                     {etiqueta.recuperar}
                   </Link>
                 </div>

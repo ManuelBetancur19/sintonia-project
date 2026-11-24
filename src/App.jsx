@@ -12,12 +12,12 @@ import Footer from "./components/footer/Footer.jsx";
 import Catalogo from "./components/catalogo/Catalogo.jsx";
 import AlbumDetalle from "./components/albumDetalle/AlbumDetalle.jsx";
 import Ingresar from "./components/ingresar/Ingresar.jsx";
-import RecuperarClave from "./components/ingresar/RecuperarClave.jsx";
 import { useHero } from "./hooks/useHero.js";
 import { useDestacados } from "./hooks/useDestacados.js";
 import { useExploraGeneros } from "./hooks/useExploraGeneros.js";
 import { useConsentimiento } from "./hooks/useConsentimiento.js";
 import { useGeneroSeleccionado } from "./hooks/useGeneroSeleccionado.js";
+import { useSesion } from "./hooks/useSesion.js";
 import { RUTAS } from "./rutas.js";
 
 function App() {
@@ -25,6 +25,7 @@ function App() {
   const [idioma, setIdioma] = useState("es");
   const location = useLocation();
   const esIngreso = location.pathname === RUTAS.ingresar;
+  const sesion = useSesion();
   // Estado y acciones del consentimiento de cookies.
   const consentimiento = useConsentimiento();
   // Referencias: el aviso de cookies (para medir su altura), el contenido principal (para mover el foco)
@@ -156,6 +157,7 @@ function App() {
           recargar={recargar}
           idioma={idioma}
           cambiarIdioma={setIdioma}
+          sesion={sesion}
         />
       ) : null}
       {/* [ACCESIBILIDAD] Con tabIndex -1 el contenido no entra en el orden de tabulación,
@@ -181,7 +183,7 @@ function App() {
                 {/* Destacados y géneros reciben el estado completo de sus hooks como props. */}
                 <Destacados {...destacados} />
                 <ExploraGeneros {...exploraGenerosInicio} />
-                <CTA textos={textosCompletos} />
+                {!sesion.iniciada ? <CTA textos={textosCompletos} /> : null}
               </>
             }
           />
@@ -218,11 +220,15 @@ function App() {
           />
           <Route
             path={RUTAS.ingresar}
-            element={<Ingresar textos={textosCompletos} idioma={idioma} />}
+            element={<Ingresar textos={textosCompletos} idioma={idioma} sesion={sesion} />}
           />
           <Route
             path={RUTAS.recuperarClave}
-            element={<RecuperarClave textos={textosCompletos} idioma={idioma} />}
+            element={(
+              <PaginaNoEncontrada
+                textos={textosCompletos?.estados?.noEncontrado}
+              />
+            )}
           />
           {/* Cualquier otra ruta muestra la página no encontrada. */}
           <Route
@@ -235,7 +241,7 @@ function App() {
           />
         </Routes>
       </main>
-      {!esIngreso ? <Footer textos={textosCompletos} /> : null}
+      {!esIngreso ? <Footer textos={textosCompletos} autenticado={sesion.iniciada} /> : null}
     </div>
   );
 }
