@@ -11,6 +11,8 @@ import CTA from "./components/cta/CTA.jsx";
 import Footer from "./components/footer/Footer.jsx";
 import Catalogo from "./components/catalogo/Catalogo.jsx";
 import AlbumDetalle from "./components/albumDetalle/AlbumDetalle.jsx";
+import Ingresar from "./components/ingresar/Ingresar.jsx";
+import RecuperarClave from "./components/ingresar/RecuperarClave.jsx";
 import { useHero } from "./hooks/useHero.js";
 import { useDestacados } from "./hooks/useDestacados.js";
 import { useExploraGeneros } from "./hooks/useExploraGeneros.js";
@@ -22,6 +24,7 @@ function App() {
   // [LOCAL] Idioma actual de la interfaz; empieza en español.
   const [idioma, setIdioma] = useState("es");
   const location = useLocation();
+  const esIngreso = location.pathname === RUTAS.ingresar;
   // Estado y acciones del consentimiento de cookies.
   const consentimiento = useConsentimiento();
   // Referencias: el aviso de cookies (para medir su altura), el contenido principal (para mover el foco)
@@ -135,7 +138,7 @@ function App() {
 
   return (
     // Estructura general: aviso de cookies, navegación, contenido principal por rutas y pie de página.
-    <div className={`sitio${location.pathname.startsWith("/albumes/") ? " sitio--album-detalle" : ""}`}>
+    <div className={`sitio${location.pathname.startsWith("/albumes/") ? " sitio--album-detalle" : ""}${esIngreso ? " sitio--ingresar" : ""}`}>
       {/* Aviso de consentimiento: recibe la referencia para medir su altura y las acciones de decisión. */}
       <AvisoCookies
         referencia={avisoCookiesRef}
@@ -145,20 +148,22 @@ function App() {
         rechazar={rechazarCookies}
       />
       {/* Navegación con el selector de idioma y la opción de recargar si falló la carga de textos. */}
-      <Navbar
-        textos={textosNavbar}
-        cargando={cargando}
-        error={error}
-        recargar={recargar}
-        idioma={idioma}
-        cambiarIdioma={setIdioma}
-      />
+      {!esIngreso ? (
+        <Navbar
+          textos={textosNavbar}
+          cargando={cargando}
+          error={error}
+          recargar={recargar}
+          idioma={idioma}
+          cambiarIdioma={setIdioma}
+        />
+      ) : null}
       {/* [ACCESIBILIDAD] Con tabIndex -1 el contenido no entra en el orden de tabulación,
           pero puede recibir el foco desde el código al cambiar de ruta o decidir las cookies. */}
       <main
         ref={contenidoRef}
         id="contenido"
-        className="contenedor"
+        className={`contenedor${esIngreso ? " contenedor--ingresar" : ""}`}
         tabIndex={-1}
       >
         <Routes>
@@ -211,6 +216,14 @@ function App() {
               />
             )}
           />
+          <Route
+            path={RUTAS.ingresar}
+            element={<Ingresar textos={textosCompletos} idioma={idioma} />}
+          />
+          <Route
+            path={RUTAS.recuperarClave}
+            element={<RecuperarClave textos={textosCompletos} idioma={idioma} />}
+          />
           {/* Cualquier otra ruta muestra la página no encontrada. */}
           <Route
             path="*"
@@ -222,7 +235,7 @@ function App() {
           />
         </Routes>
       </main>
-      <Footer textos={textosCompletos} />
+      {!esIngreso ? <Footer textos={textosCompletos} /> : null}
     </div>
   );
 }

@@ -1,0 +1,31 @@
+/* RESPONSABILIDAD: Mantiene el flujo de recuperación alineado con la tarjeta de ingreso. */
+.recuperar-confirmacion {
+  margin-bottom: var(--espacio-4);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 1px solid var(--borde-sutil);
+  border-radius: var(--radio-md);
+  color: var(--texto-principal);
+  background: var(--fondo-elevada);
+  font-size: 0.875rem;
+}
+
+.recuperar-confirmacion strong { display: block; margin-bottom: var(--espacio-1); }
+.recuperar-confirmacion p { margin: 0; color: var(--texto-secundario); }
+
+.recuperar-codigo-prueba {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  margin: 0;
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 1px dashed var(--marca-primario);
+  border-radius: var(--radio-md);
+  color: var(--texto-principal);
+  background: var(--fondo-elevada);
+  font-size: 0.8125rem;
+}
+
+.recuperar-codigo-prueba span { color: var(--texto-secundario); }
+.recuperar-codigo-prueba strong { font-variant-numeric: tabular-nums; letter-spacing: 0.12em; }
+.recuperar-otro-codigo { justify-self: center; }
+.ingresar-enlace-volver { color: var(--texto-marca); font-weight: 600; }

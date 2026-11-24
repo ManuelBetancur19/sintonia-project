@@ -4,5 +4,6 @@ export const RUTAS = {
   catalogo: "/catalogo",
   albumDetalle: "/albumes/:id",
   ingresar: "/ingresar",
+  recuperarClave: "/recuperar-clave",
   crearCuenta: "/crear-cuenta",
 };
