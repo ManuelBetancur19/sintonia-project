@@ -167,6 +167,7 @@
   max-width: 540px;
   justify-self: end;
 }
+.sitio--ingresar .ingresar-collage-movil { display: none; }
 .sitio--ingresar .ingresar-cabecera {
   display: flex;
   align-items: center;
@@ -372,17 +373,81 @@
     display: block;
     min-height: max(620px, calc(100vh - var(--altura-aviso-cookies, 0px)));
     min-height: max(620px, calc(100dvh - var(--altura-aviso-cookies, 0px)));
-    padding: var(--espacio-6) clamp(1.25rem, 6vw, 2rem);
+    padding: var(--espacio-4) clamp(1rem, 6vw, 1.5rem) var(--espacio-8);
+  }
+  .sitio--ingresar .ingresar-collage-movil {
+    position: relative;
+    display: block;
+    width: min(100%, 340px);
+    height: 172px;
+    margin: 0 auto var(--espacio-3);
+  }
+  .sitio--ingresar .ingresar-collage-movil img {
+    position: absolute;
+    display: block;
+    height: auto;
+    max-width: 100%;
+  }
+  .sitio--ingresar .ingresar-collage-principal {
+    z-index: 1;
+    top: 0;
+    left: 50%;
+    width: min(196px, 62vw);
+    transform: translateX(-50%);
+  }
+  .sitio--ingresar .ingresar-collage-rosa {
+    z-index: 2;
+    top: 48px;
+    left: 0;
+    width: clamp(104px, 32vw, 122px);
+  }
+  .sitio--ingresar .ingresar-collage-naranja {
+    z-index: 2;
+    top: 15px;
+    right: 0;
+    width: clamp(104px, 32vw, 122px);
   }
   .sitio--ingresar .ingresar-columna-formulario {
-    min-height: inherit;
+    min-height: auto;
     max-width: 520px;
     margin-inline: auto;
   }
-  .sitio--ingresar .ingresar-contenido { padding-block: var(--espacio-8); }
+  .sitio--ingresar .ingresar-cabecera { margin-bottom: var(--espacio-4); }
+  .sitio--ingresar .ingresar-cabecera .ingresar-marca { min-height: 36px; }
+  .sitio--ingresar .ingresar-contenido {
+    display: block;
+    flex: initial;
+    padding: 0;
+  }
+  .sitio--ingresar .ingresar-tarjeta { max-width: none; }
   .sitio--ingresar .ingresar-panel-arte { display: none; }
-  .sitio--ingresar .ingresar-encabezado { margin-bottom: var(--espacio-6); }
-  .sitio--ingresar .ingresar-encabezado h1 { font-size: clamp(2rem, 8vw, 2.75rem); }
+  .sitio--ingresar .ingresar-encabezado { margin-bottom: var(--espacio-4); }
+  .sitio--ingresar .ingresar-encabezado h1 {
+    max-width: 12ch;
+    font-size: clamp(2rem, 9vw, 2.35rem);
+    line-height: 1.16;
+  }
+  .sitio--ingresar .ingresar-encabezado p {
+    margin-top: var(--espacio-3);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .sitio--ingresar .ingresar-formulario { gap: var(--espacio-4); }
+  .sitio--ingresar .ingresar-campo label { font-size: 0.875rem; }
+  .sitio--ingresar .ingresar-campo input { min-height: 3rem; }
+  .sitio--ingresar .ingresar-opciones {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--espacio-2);
+  }
+  .sitio--ingresar .ingresar-recordar { font-size: 0.875rem; }
+  .sitio--ingresar .ingresar-recuperar { min-height: 32px; font-size: 0.875rem; }
+  .sitio--ingresar .ingresar-enviar { min-height: 3rem; }
+  .sitio--ingresar .ingresar-crear-cuenta { margin-top: var(--espacio-4); }
+  .sitio--ingresar .ingresar-derechos {
+    margin-top: var(--espacio-8);
+    padding-top: var(--espacio-3);
+  }
 }
 
 @media (max-width: 380px) {

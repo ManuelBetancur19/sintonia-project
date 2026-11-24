@@ -96,6 +96,8 @@
   white-space: nowrap;
 }
 
+.navbar-enlace-icono { display: none; }
+
 .navbar-enlaces a:hover {
   color: var(--texto-principal);
 }
@@ -259,6 +261,8 @@
   cursor: pointer;
 }
 
+.navbar-usuario-movil { display: none; }
+
 .navbar-usuario-menu {
   position: absolute;
   z-index: 30;
@@ -400,7 +404,7 @@
   }
 
   .navbar-logo {
-    height: 36px;
+    height: 32px;
   }
 
   .navbar-ingresar-rapido {
@@ -424,13 +428,19 @@
     display: none;
   }
 
+  .navbar.menu-abierto .navbar-interior {
+    z-index: 30;
+    min-height: 60px;
+    border-bottom: 1px solid var(--borde-sutil);
+  }
+
   .navbar-icono-hamburguesa {
     display: inline-flex;
-    flex: 0 0 44px;
+    flex: 0 0 40px;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     padding: 0;
     border: 1px solid var(--borde-fuerte);
     border-radius: var(--radio-completo);
@@ -482,8 +492,21 @@
   }
 
   .navbar-enlaces a {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-3);
     min-height: 44px;
     padding-inline: var(--espacio-2);
+  }
+
+  .navbar-panel.is-abierto .navbar-enlace-icono {
+    display: inline-flex;
+    flex: 0 0 auto;
+    color: var(--texto-secundario);
+  }
+
+  .navbar-panel.is-abierto .navbar-enlaces a[aria-current="page"] .navbar-enlace-icono {
+    color: var(--texto-marca);
   }
 
   /* El margen superior automático empuja las acciones al final del panel. */
@@ -556,6 +579,68 @@
   }
 
   .navbar-usuario {
-    align-self: flex-end;
+    display: none;
+  }
+
+  .navbar-acciones > .navbar-usuario-movil {
+    display: flex;
+    order: 3;
+    align-items: center;
+    gap: var(--espacio-3);
+    width: 100%;
+    min-width: 0;
+    min-height: 68px;
+    padding: var(--espacio-3);
+    border-radius: var(--radio-sm);
+    background: var(--fondo-superficie);
+  }
+
+  .navbar-usuario-movil-avatar {
+    display: grid;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--texto-principal);
+    background: var(--marca-secundario);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .navbar-usuario-movil-datos {
+    display: grid;
+    flex: 1;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .navbar-usuario-movil-datos strong {
+    overflow: hidden;
+    color: var(--texto-principal);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .navbar-usuario-movil-datos > span {
+    color: var(--texto-secundario);
+    font-size: 0.625rem;
+  }
+
+  .navbar-usuario-movil > button {
+    flex: 0 0 auto;
+    min-height: 36px;
+    padding-inline: var(--espacio-3);
+    border: 1px solid var(--borde-fuerte);
+    border-radius: var(--radio-completo);
+    color: var(--texto-principal);
+    background: transparent;
+    font-size: 0.6875rem;
+  }
+
+  .navbar-usuario-movil > button:hover {
+    background: var(--fondo-elevada);
   }
 }

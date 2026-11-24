@@ -2,6 +2,7 @@
 
 // [STATIC] Trazos SVG de cada icono, indexados por nombre y dibujados en una cuadrícula de 24x24.
 const TRAZOS = {
+  inicio: <><path d="m3 10 9-7 9 7" /><path d="M5 9v11h14V9" /><path d="M9 20v-6h6v6" /></>,
   buscar: <><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 4.5 4.5" /></>,
   menu: <><path d="M4 6h16M4 12h16M4 18h16" /></>,
   cerrar: <path d="m6 6 12 12M6 18 18 6" />,

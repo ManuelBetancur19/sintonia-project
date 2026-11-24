@@ -199,3 +199,25 @@
 - **Pruebas ejecutadas:** `npm run build` compiló correctamente; `git diff --check` terminó sin errores de formato. La inspección de ruta confirmó que `/recuperar-clave` usa el mismo componente y el mismo objeto `estados.noEncontrado` que `*`; el link de ingreso ya navega a esa ruta.
 - **Pruebas pendientes:** no se ejecutó navegador, así que quedan pendientes la interacción desde `/ingresar`, la carga visible de textos API y el clic de “Ir al inicio”.
 - **Estado:** PARCIAL. La ruta se actualizó y compila; falta validar el flujo renderizado en navegador.
+
+## PROMPT 016 — Diseño móvil de inicio de sesión
+
+- **Fecha de ejecución:** 2026-11-24.
+- **Cambios:** en el breakpoint móvil de `/ingresar` se agregó la ilustración decorativa antes del encabezado de marca y se compactaron los espacios del formulario, campos, opciones y botón. Los ajustes están limitados a estilos móviles; la composición desktop y su cuadrícula dinámica de ocho álbumes no se alteraron.
+- **Recursos reutilizados:** `src/assets/ilustraciones/Hero (2).svg` (pieza turquesa), `Hero (3).svg` (pieza rosa) y `Hero.svg` (pieza coral/amarilla), importados por Vite y superpuestos con CSS. La ilustración está marcada como decorativa y no depende del catálogo.
+- **Archivos modificados:** `src/components/ingresar/Ingresar.jsx`, `src/components/ingresar/Ingresar.css` y este registro.
+- **Pruebas:** `npm run build` terminó correctamente (155 módulos transformados). Se intentó abrir `/ingresar` en el navegador integrado para inspección responsive, pero el navegador devolvió `ERR_CONNECTION_TIMED_OUT` para el servidor local; por tanto no se verificaron visualmente 320, 375, 390 y 430 px, la interacción del formulario ni la ausencia de desbordamiento. `git diff --check` se volvió a ejecutar después de limpiar el formato.
+- **Pendientes:** inspeccionar en navegador los cuatro anchos solicitados y confirmar el orden/escala del collage, el formulario, la recuperación 404 y la cuadrícula desktop. No se realizaron pruebas de autenticación ni se generaron errores simulados.
+- **Estado:** PARCIAL. La adaptación móvil está implementada y compila; la revisión visual en navegador quedó limitada porque el navegador integrado no pudo acceder al servidor local.
+
+## PROMPT 017 — Menú móvil con sesión iniciada
+
+- **Fecha de ejecución:** 2026-11-24.
+- **Cambios:** el menú móvil conserva el logo y cierre en un encabezado compacto con separador. Los enlaces de Inicio y Catálogo incorporan iconos de casa y búsqueda reutilizados desde `Icono.jsx`; `aria-current="page"` se mantiene para la ruta activa. El contenido inferior conserva el selector de idioma y el panel de accesibilidad.
+- **Bloque de usuario:** con sesión activa, el menú móvil muestra una fila con avatar violeta, `usuario.iniciales`, el primer nombre derivado de `usuario.nombre`, estado localizado “Sesión iniciada”/“Signed in” y el botón de cierre de sesión existente. En escritorio continúa el avatar y menú desplegable anterior. Sin sesión permanece el bloque público de ingreso/registro y no se renderiza información personal.
+- **Cierre de sesión:** el botón reutiliza `cerrarSesion()`, limpia la sesión a través del hook compartido, cierra el menú y conserva idioma/preferencias de accesibilidad.
+- **Archivos modificados:** `src/components/navbar/Navbar.jsx`, `src/components/navbar/Navbar.css`, `src/components/Icono/Icono.jsx` y este registro.
+- **Textos:** navegación y controles usan los textos de API existentes; el estado de sesión usa fallback local ES/EN porque no se encontró una clave local para ese rótulo y no se inventó propiedad del contrato.
+- **Pruebas:** `npm run build` terminó correctamente (155 módulos transformados) y `git diff --check` pasó sin errores de whitespace. No se ejecutaron pruebas visuales/interactivas del menú móvil público o autenticado. La comparación en navegador depende de que el servidor local y una sesión de prueba estén accesibles. El menú de escritorio se mantuvo sin cambios de estructura/estilo.
+- **Pendientes:** comprobar menú a ancho móvil, nombre/iniciales con usuario real, accesibilidad, selector de idioma, navegación y cierre de sesión; comparar visualmente el menú desktop antes/después.
+- **Estado:** PARCIAL. Compila correctamente; falta validación en navegador con una sesión de prueba.

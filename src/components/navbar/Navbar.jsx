@@ -40,6 +40,10 @@ export default function Navbar({
   const autenticado = Boolean(usuario);
   const etiquetaCuenta = idioma === "en" ? "User account" : "Cuenta de usuario";
   const etiquetaCerrarSesion = idioma === "en" ? "Sign out" : "Cerrar sesión";
+  const etiquetaSesionIniciada = idioma === "en" ? "Signed in" : "Sesión iniciada";
+  const primerNombre = typeof usuario?.nombre === "string"
+    ? usuario.nombre.trim().split(/\s+/)[0]
+    : "";
 
   // Separa las secciones de textos que se usan más abajo; el encadenado opcional evita errores mientras no han cargado.
   const nav = textos?.navbar;
@@ -148,7 +152,10 @@ export default function Navbar({
           aria-expanded={abierto}
           aria-controls={idPanel}
           disabled={!menu}
-          onClick={() => setAbierto((valor) => !valor)}
+          onClick={() => {
+            setCuentaAbierta(false);
+            setAbierto((valor) => !valor);
+          }}
         >
           <Icono nombre={abierto ? "cerrar" : "menu"} />
         </button>
@@ -173,6 +180,9 @@ export default function Navbar({
                       aria-current={location.pathname === RUTAS[clave] ? "page" : undefined}
                       onClick={cerrarMenu}
                     >
+                      <span className="navbar-enlace-icono">
+                        <Icono nombre={clave === "inicio" ? "inicio" : "buscar"} />
+                      </span>
                       {texto}
                     </Link>
                   </li>
@@ -236,6 +246,20 @@ export default function Navbar({
                     >
                       {menu?.botones?.invitado?.ingresar}
                     </Link>
+                  </div>
+                ) : null}
+                {autenticado ? (
+                  <div className="navbar-usuario-movil">
+                    <span className="navbar-usuario-movil-avatar" aria-hidden="true">
+                      {typeof usuario.iniciales === "string" ? usuario.iniciales : ""}
+                    </span>
+                    <div className="navbar-usuario-movil-datos">
+                      {primerNombre ? <strong>{primerNombre}</strong> : null}
+                      <span>{etiquetaSesionIniciada}</span>
+                    </div>
+                    <button type="button" onClick={cerrarSesion}>
+                      {etiquetaCerrarSesion}
+                    </button>
                   </div>
                 ) : null}
                 {/* Ingresar de escritorio: va aparte porque el CSS lo oculta en móvil, donde se usa el del menú. */}

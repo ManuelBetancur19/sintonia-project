@@ -6,7 +6,7 @@ import ilustracionNaranja from "../../assets/ilustraciones/Hero.svg";
 import { RUTAS } from "../../rutas.js";
 import "./Hero.css";
 
-export default function Hero({ textos, totalGeneros, textoTarjeta }) {
+export default function Hero({ textos, totalGeneros, textoTarjeta, sesionIniciada = false }) {
   // No renderiza la portada hasta que los textos del hero y las cifras estén disponibles.
   if (!textos?.hero || !textos?.cifras) return null;
 
@@ -26,9 +26,11 @@ export default function Hero({ textos, totalGeneros, textoTarjeta }) {
 
         {/* Acciones principales: registro como llamada primaria y catálogo como alternativa. */}
         <div className="hero-acciones">
-          <Link className="hero-boton hero-boton-primario" to={RUTAS.crearCuenta}>
-            {hero.botones.crearCuentaGratis}
-          </Link>
+          {!sesionIniciada ? (
+            <Link className="hero-boton hero-boton-primario" to={RUTAS.crearCuenta}>
+              {hero.botones.crearCuentaGratis}
+            </Link>
+          ) : null}
           <Link className="hero-boton hero-boton-secundario" to={RUTAS.catalogo}>
             {hero.botones.explorarCatalogo}
           </Link>

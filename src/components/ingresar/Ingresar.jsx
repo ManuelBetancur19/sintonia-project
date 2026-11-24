@@ -5,6 +5,9 @@ import { usePortadasIngreso } from "../../hooks/usePortadasIngreso.js";
 import PortadaAlbum from "../destacados/PortadaAlbum.jsx";
 import { RUTAS } from "../../rutas.js";
 import logo from "../../assets/logo/logo.svg";
+import ilustracionTurquesa from "../../assets/ilustraciones/Hero (2).svg";
+import ilustracionRosa from "../../assets/ilustraciones/Hero (3).svg";
+import ilustracionNaranja from "../../assets/ilustraciones/Hero.svg";
 import "./Ingresar.css";
 
 const TEXTO_LOCAL = {
@@ -225,6 +228,12 @@ export default function Ingresar({ textos, idioma, sesion }) {
 
   return (
     <section className="ingresar-vista" aria-labelledby="ingresar-titulo">
+      <div className="ingresar-collage-movil" aria-hidden="true">
+        <img className="ingresar-collage-principal" src={ilustracionTurquesa} alt="" />
+        <img className="ingresar-collage-rosa" src={ilustracionRosa} alt="" />
+        <img className="ingresar-collage-naranja" src={ilustracionNaranja} alt="" />
+      </div>
+
       <div className="ingresar-columna-formulario">
         <div className="ingresar-cabecera">
           <Link

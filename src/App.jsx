@@ -179,6 +179,7 @@ function App() {
                   textos={textosHero}
                   textoTarjeta={textoTarjeta}
                   totalGeneros={exploraGenerosInicio.totalGeneros}
+                  sesionIniciada={sesion.iniciada}
                 />
                 {/* Destacados y géneros reciben el estado completo de sus hooks como props. */}
                 <Destacados {...destacados} />
